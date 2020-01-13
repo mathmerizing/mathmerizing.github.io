@@ -3,41 +3,34 @@
 	<head>
 		<title>Julian Roth</title>
 		<!-- link to bootstrap -->
-		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'>
-		<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
-		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
+		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<!-- Optional JavaScript -->
+    	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	</head>
 	<body>
 
-		<nav class="navbar navbar-inverse">
-  		<div class="container">
-    		<div class="navbar-header">
-        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        	<span class="icon-bar"></span>
-        	<span class="icon-bar"></span>
-        	<span class="icon-bar"></span>
-      		</button>
-    		</div>
-    		<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-		  		<li class="active"><a href="/">Home</a></li>
-					<li><a href="\cv">CV</a></li>
-		  		<li><a href="\about">About Me</a></li>
-				</div>
-  		</div>
-		</nav>
+		<nav class="nav nav-pills flex-column flex-sm-row">
+			<a class="flex-sm-fill text-sm-center nav-link active" href="#">Home</a>
+			<a class="flex-sm-fill text-sm-center nav-link" href="\cv">CV</a>
+			<a class="flex-sm-fill text-sm-center nav-link" href="\about">About Me</a>
+		  </nav>
+
+		<br>
 
 		<header class="bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
 
       <!-- Image -->
-      <img  class="img-circle avatar" src="img/julian_roth.jpg" alt="Julian Roth" style="width:35%;padding:5%;min-width:150px">
+      <img  class="rounded-circle" src="img/julian_roth.jpg" alt="Julian Roth" style="width:35%;padding:5%;min-width:150px;min-height:150px;">
 
       <!-- Heading -->
       <h1 class="heading textmb-0">Julian Roth</h1>
 
       <!-- Subheading -->
-      <p class="subheading font-weight-light mb-0">Mathematics student</p>
+      <p class="subheading font-weight-light mb-0" style="padding:1%;">Mathematics student</p>
 
     </div>
   </header>
@@ -47,17 +40,111 @@
 		<div class="container-fluid bg-1 text-center">
     		<div class="blurb">
 				<center><p>I'm a college student majoring in mathematics who is interested in numerical analysis and data science. <a href="/about">Read more about me...</a></p></center>
-    		</div><!-- /.blurb -->
+			</div><!-- /.blurb -->
+			
+			<h2>Projects</h2>
+			<hr style="width:80%;">
+
+			<h3>Numerical Analysis</h3>
+
+			<!-- container/NumericalAnalysis-->
+			<div class="container">
+				<!-- first row-->
+				<div class="row">
+
+					<!-- first project-->
+					<div class="col-md">
+						<div class="card bg-light mb-3">
+							<!-- enter image source !!! -->
+							<center><img class="card-img-top"  style="width:35%;padding:5%;min-width:150px;"></center>
+							<div class="card-body">
+						  		<h5 class="card-title">Schrödinger equation</h5>
+						  		<p class="card-text">Project description: Work in progress...</p>
+						  		<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+					  	</div>
+					</div>
+					
+					<!-- second project-->
+					<div class="col-md">
+						<div class="card bg-light mb-3">
+							<!-- enter image source !!! -->
+							<center><img class="card-img-top" style="width:35%;padding:5%;min-width:150px;"></center>
+							<div class="card-body">
+						  		<h5 class="card-title">Bachelor thesis</h5>
+						  		<p class="card-text">Project description: I haven't started yet.</p>
+						  		<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+					  	</div>
+					</div>
+					
+				  </div>
+			</div>
+		
+			<h3>Data Science</h3>
+
+			<!-- container/DataScience-->
+			<div class="container">
+				<!-- first row-->
+				<div class="row">
+
+					<!-- first project-->
+					<div class="col-md">
+						<div class="card bg-light mb-3">
+							<!-- enter image source !!! -->
+							<center><img class="card-img-top"  style="width:35%;padding:5%;min-width:150px;"></center>
+							<div class="card-body">
+						  		<h5 class="card-title">Basketball Shot Analysis</h5>
+						  		<p class="card-text">Project description: Will be documented soon...</p>
+						  		<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+					  	</div>
+					</div>
+					
+					<!-- second project-->
+					<div class="col-md">
+						<div class="card bg-light mb-3">
+							<!-- enter image source !!! -->
+							<center><img class="card-img-top" style="width:35%;padding:5%;min-width:150px;"></center>
+							<div class="card-body">
+						  		<h5 class="card-title">Squat Workout Camera</h5>
+						  		<p class="card-text">Project description: Will be documented soon...</p>
+						  		<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+					  	</div>
+					</div>
+					
+				  </div>
+
+				  <!-- second row-->
+				<div class="row">
+
+					<!-- first project-->
+					<div class="col-md">
+						<div class="card bg-light mb-3">
+							<!-- enter image source !!! -->
+							<center><img class="card-img-top"  style="width:35%;padding:5%;min-width:150px;"></center>
+							<div class="card-body">
+						  		<h5 class="card-title">Four In A Row</h5>
+						  		<p class="card-text">Project description: Will be documented soon...</p>
+						  		<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+					  	</div>
+					</div>
+					
+				  </div>
+			</div>
 
 		</div><!-- /.container -->
 
-<hr style="width:80%;">
+	
+		<hr style="width:80%;">
 
-	<footer class="container-fluid bg-1 text-center footer">
-  	<p>
-			<a href="mailto:mathmerizing@gmail.com"><span class="glyphicon glyphicon-envelope"></span></a>&nbsp;&nbsp;
-			<a href="https://github.com/mathmerizing">GitHub</a>&nbsp;&nbsp;
-  	</p>
-	</footer>
+		<footer class="container-fluid bg-1 text-center footer">
+  			<p>
+			<a href="mailto:mathmerizing@gmail.com"><svg height="32" class="octicon octicon-mail" viewBox="0 0 14 16" version="1.1" width="28" aria-hidden="true"><path fill-rule="evenodd" d="M0 4v8c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1zm13 0L7 9 1 4h12zM1 5.5l4 3-4 3v-6zM2 12l3.5-3L7 10.5 8.5 9l3.5 3H2zm11-.5l-4-3 4-3v6z"></path></svg></a>&nbsp;&nbsp;
+			<a href="https://github.com/mathmerizing"> <svg height="32" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>&nbsp;&nbsp;
+  			</p>
+		</footer>
 	</body>
 </html>

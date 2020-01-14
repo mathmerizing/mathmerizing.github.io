@@ -36,16 +36,56 @@
   </header>
 <br>
 
+  		<!-- Modals == PopUp Windows-->
+
+  		<!-- SchrodingerModal -->
+  		<div class="modal fade bd-example-modal-lg" id="schrodingerModal" tabindex="-1" role="dialog" aria-labelledby="schrodingerModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+	  			<div class="modal-content">
+					<div class="modal-header">
+		  				<h5 class="modal-title" id="exampleModalLongTitle">Solving the Schrödinger Equation with deal.ii</h5>
+		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+		  				</button>
+					</div>
+					<div class="modal-body">
+						<b>authors:</b> &nbsp;&nbsp; Leon Samolik, Max Schröder, Julian Roth <br>
+						<br>
+						This group project is the result of a lecture on programming finite elements in C++
+						held at the Leibniz Universität Hannover in the winter semester 2019/20. We decided to simulate the quantum harmonic oscillator numerically.
+						For that purpose, we discretized the Schrödinger equation with the harmonic oscillator as the potential, i.e. <br>
+						<center><img src="img/schrodinger.svg"  style="padding-left:10%; padding-right:10%;"></center> <br>
+						To apply the finite element method, we discretized the time derivative with the one step θ-scheme. The resulting equation
+						was split into its real and imaginary part and then transformed into a weak form by multiplication with a test function and integration by parts.
+						In a 2D setting a direct solver, like the LU decomposition, turned out to be sufficient to solver our linear equation system.
+						Additionally, the inverse only needed to be calculated once, since the system matrix remained constant throughout time.
+						Due to the fact that we decided to use Dirichlet boundary conditions instead of periodic boundary conditions, our simulation
+						always converged against the same eigenstate, even when other parameters where changed slightly.
+						<br> <br>
+						In the animation below we started with a normal distribution as our initial condition 
+						and applied inhomogeneous Dirichlet conditions, which were close to zero. <br><br>
+						<center><img src="img/schrodinger.gif" alt=”Schrodinger GIF” style="width: 90%;"></center>
+						<br>
+						For more results and a more detailed documentation of our project please check out <a href="https://github.com/mfschroeder/Programming_FE_Cpp#">the project's GitHub page</a>.
+					</div>
+					<div class="modal-footer">
+		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  				<a href="https://github.com/mfschroeder/Programming_FE_Cpp#" class="btn btn-primary">Go to project</a>
+					</div>
+	  			</div>
+			</div>
+  		</div>
+
 
 		<div class="container-fluid bg-1 text-center">
     		<div class="blurb">
 				<center><p>I'm a college student majoring in mathematics who is interested in numerical analysis and data science. <a href="/about">Read more about me...</a></p></center>
 			</div><!-- /.blurb -->
 			
-			<h2>Projects</h2>
+			<h1>Projects</h1>
 			<hr style="width:80%;">
 
-			<h3>Numerical Analysis</h3>
+			<h2>Numerical Analysis</h2>
 
 			<!-- container/NumericalAnalysis-->
 			<div class="container">
@@ -58,7 +98,11 @@
 							<img class="card-img-top" src="img/schrodinger.svg"  style="padding-left:10%; padding-right:10%;">
 							<div class="card-body">
 								<h4 clacss="card-title">Schrödinger equation</h4>
-						  		<p class="card-text">Simulating the Quantum Harmonic Oscillator though the FEM in deal.ii.</p>
+								<p class="card-text">Simulating the Quantum Harmonic Oscillator though the FEM in deal.ii.</p>
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schrodingerModal">
+									More info
+  								</button>
 						  		<a href="https://github.com/mfschroeder/Programming_FE_Cpp#" class="btn btn-primary">Go to project</a>
 							</div>
 					  	</div>
@@ -81,7 +125,7 @@
 				  </div>
 			</div>
 		
-			<h3>Data Science</h3>
+			<h2>Data Science</h2>
 
 			<!-- container/DataScience-->
 			<div class="container">
@@ -112,7 +156,7 @@
 					  	</div>
 					</div>
 					
-				  </div>
+				</div>
 
 				  <!-- second row-->
 				<div class="row">
@@ -120,7 +164,7 @@
 					<!-- first project-->
 					<div class="col-md">
 						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="img/four_in_row.png">
+							<img class="card-img-top" src="img/four_in_row_rescaled.png">
 							<div class="card-body">
 								<h4 class="card-title">Four In A Row</h4>
 						  		<p class="card-text">A Java version of the game "Four In A Row". Implemented Minimax, Alpha-beta pruning and NEAT.</p>

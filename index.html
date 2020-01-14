@@ -57,7 +57,7 @@
 						<center><img src="img/schrodinger.svg"  style="padding-left:10%; padding-right:10%;"></center> <br>
 						To apply the finite element method, we discretized the time derivative with the one step θ-scheme. The resulting equation
 						was split into its real and imaginary part and then transformed into a weak form by multiplication with a test function and integration by parts.
-						In a 2D setting a direct solver, like the LU decomposition, turned out to be sufficient to solver our linear equation system.
+						In a 2D setting a direct solver, like the LU decomposition, turned out to be sufficient to solve our linear equation system.
 						Additionally, the inverse only needed to be calculated once, since the system matrix remained constant throughout time.
 						Due to the fact that we decided to use Dirichlet boundary conditions instead of periodic boundary conditions, our simulation
 						always converged against the same eigenstate, even when other parameters where changed slightly.

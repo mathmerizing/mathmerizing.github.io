@@ -65,16 +65,16 @@
 						was split into its real and imaginary part and then transformed into a weak form by multiplication with a test function and integration by parts.
 						In a 2D setting a direct solver, like the LU decomposition, turned out to be sufficient to solve our linear equation system.
 						Additionally, the inverse only needed to be calculated once, since the system matrix remained constant throughout time.
-						Due to the fact that we decided to use Dirichlet boundary conditions instead of periodic boundary conditions, our simulation
-						always converged against the same eigenstate, even when other parameters where changed slightly.
 						</p>
 						
 						<p style="text-align:justify;">
 						In the animation below we started with a normal distribution as our initial condition 
-						and applied inhomogeneous Dirichlet conditions, which were close to zero. 
+						and applied homogeneous Dirichlet conditions. This simulates an imprisoned quantum particle.
+						The particle is being reflected off the boundary and with time moves towards the origin 
+						where it interferes with itself.
 						</p>
-						
-						<center><img src="img/schrodinger.gif" alt=”Schrodinger GIF” style="width: 90%;"></center>
+
+						<center><video src="img/schrodinger_animation_3d.ogv" alt=”Schrodinger GIF” controls style="width: 90%;"></center>
 						<br>
 						
 						<p style="text-align:justify;">

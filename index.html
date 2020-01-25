@@ -24,7 +24,7 @@
     <div class="container d-flex align-items-center flex-column">
 
       <!-- Image -->
-      <img  class="rounded-circle" src="img/julian_roth.jpg" alt="Julian Roth" style="width:35%;padding:5%;min-width:150px;min-height:150px;">
+      <img  class="rounded-circle" src="res/julian_roth.jpg" alt="Julian Roth" style="width:35%;padding:5%;min-width:150px;min-height:150px;">
 
       <!-- Heading -->
       <h1 class="heading textmb-0">Julian Roth</h1>
@@ -58,7 +58,7 @@
 						For that purpose, we discretized the Schrödinger equation with the harmonic oscillator as the potential, i.e. <br>
 						</p>
 						
-						<center><img src="img/schrodinger.svg"  style="padding-left:10%; padding-right:10%;"></center> <br>
+						<center><img src="res/schrodinger.svg"  style="padding-left:10%; padding-right:10%;"></center> <br>
 						
 						<p style="text-align:justify;">
 						To apply the finite element method, we discretized the time derivative with the one step θ-scheme. The resulting equation
@@ -74,7 +74,7 @@
 						where it interferes with itself.
 						</p>
 
-						<center><video src="img/schrodinger_animation_3d.mp4" alt=”Schrodinger video” controls style="width: 90%;"></center>
+						<center><video src="res/schrodinger/schrodinger_animation_3d.mp4" alt=”Schrodinger video” controls style="width: 90%;"></center>
 						<br>
 						
 						<p style="text-align:justify;">
@@ -84,6 +84,64 @@
 					<div class="modal-footer">
 		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		  				<a href="https://github.com/mfschroeder/Programming_FE_Cpp#" class="btn btn-primary">Go to project</a>
+					</div>
+	  			</div>
+			</div>
+		  </div>
+		  
+
+		<!-- BasketballModal -->
+  		<div class="modal fade bd-example-modal-lg" id="basketballModal" tabindex="-1" role="dialog" aria-labelledby="basketballModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+	  			<div class="modal-content">
+					<div class="modal-header">
+		  				<h5 class="modal-title" id="exampleModalLongTitle">Detecting basketballs in a video and plotting its trajectory</h5>
+		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+		  				</button>
+					</div>
+					<div class="modal-body">
+						<b>author:</b> &nbsp;&nbsp; Julian Roth <br>
+						<br>
+						
+						<p style="text-align:justify;">
+							The goal of this project was to be able to analyze the release angle when shooting a basketball.
+							Using Tensorflow's Object Detection API, I applied transfer learning to be able to detect basketballs in images.
+							Thus I was able to go through each frame of a video and draw a bounding box around the basketball.
+							This can be seen in the video below.
+						</p>
+						
+						<center><video src="res/basketball/shot_video.mp4" alt=”shot video” controls style="width: 40%;"></center>
+						<br>
+						
+						<p style="text-align:justify;">
+							Using the center of the boxes surrounding the basketball, there are now multiple points which
+							can be used for a quadratic regression, i.e. we can fit a parabola to the basketball's trajectory.
+							When running the Python script, there are two sliders which can be adjusted manually to figure out the exact release angle:
+							<ul>
+								<li>
+									<i>release:</i> Move the release point along the parabola of the basketball shot.
+								</li>
+								<li>
+									<i>frame number:</i> Choose the frame of the video which is being shown.
+								</li>  
+							</ul>
+						</p>
+						
+						<p style="text-align:justify;">
+							For the video above we get the following analysis:
+						</p>
+
+						<center><img src="res/basketball/analyzed_shot.png"  style="padding-left:10%; padding-right:10%; width: 90%;"></center> <br>
+						<br>
+						
+						<p style="text-align:justify;">
+						For more results and a more detailed documentation of our project please check out <a href="https://github.com/mathmerizing/Basketball_Shot_Analysis#">the project's GitHub page</a>.
+						</p>
+					</div>
+					<div class="modal-footer">
+		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  				<a href="https://github.com/mathmerizing/Basketball_Shot_Analysis#" class="btn btn-primary">Go to project</a>
 					</div>
 	  			</div>
 			</div>
@@ -108,7 +166,7 @@
 					<!-- first project-->
 					<div class="col-md">
 						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="img/schrodinger.svg"  style="padding-left:10%; padding-right:10%;">
+							<img class="card-img-top" src="res/schrodinger.svg"  style="padding-left:10%; padding-right:10%;">
 							<div class="card-body">
 								<h4 clacss="card-title">Schrödinger equation</h4>
 								<p class="card-text">Simulating the Quantum Harmonic Oscillator though the FEM in deal.ii.</p>
@@ -148,10 +206,14 @@
 					<!-- first project-->
 					<div class="col-md">
 						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="img/basketball.png">
+							<img class="card-img-top" src="res/basketball.png">
 							<div class="card-body">
 								<h4 class="card-title">Basketball Shot Analysis</h4>
-						  		<p class="card-text">Plotting the trajectory of a basketball shot with Tensorflow's Object Detection API.</p>
+								<p class="card-text">Plotting the trajectory of a basketball shot with Tensorflow's Object Detection API.</p>
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basketballModal">
+									More info
+  								</button>
 						  		<a href="https://github.com/mathmerizing/Basketball_Shot_Analysis" class="btn btn-primary">Go to project</a>
 							</div>
 					  	</div>
@@ -160,7 +222,7 @@
 					<!-- second project-->
 					<div class="col-md">
 						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="img/squat.png">
+							<img class="card-img-top" src="res/squat.png">
 							<div class="card-body">
 								<h4 class="card-title">Squat Workout Camera</h4>
 						  		<p class="card-text">Application which uses PoseNet to help users with their squat workout.</p>
@@ -177,7 +239,7 @@
 					<!-- first project-->
 					<div class="col-md">
 						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="img/four_in_row_rescaled.png">
+							<img class="card-img-top" src="res/four_in_row_rescaled.png">
 							<div class="card-body">
 								<h4 class="card-title">Four In A Row</h4>
 						  		<p class="card-text">A Java version of the game "Four In A Row". Implemented Minimax, Alpha-beta pruning and NEAT.</p>

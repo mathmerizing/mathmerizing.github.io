@@ -106,7 +106,7 @@
 						
 						<p style="text-align:justify;">
 							The goal of this project was to be able to analyze the release angle when shooting a basketball.
-							Using Tensorflow's Object Detection API, I applied transfer learning to be able to detect basketballs in images.
+							Using <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">Tensorflow's Object Detection API</a>, I applied transfer learning to be able to detect basketballs in images.
 							Thus I was able to go through each frame of a video and draw a bounding box around the basketball.
 							This can be seen in the video below.
 						</p>
@@ -145,7 +145,82 @@
 					</div>
 	  			</div>
 			</div>
-  		</div>
+		  </div>
+		  
+		  <!-- SquatModal -->
+  		<div class="modal fade bd-example-modal-lg" id="squatModal" tabindex="-1" role="dialog" aria-labelledby="squatModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+	  			<div class="modal-content">
+					<div class="modal-header">
+		  				<h5 class="modal-title" id="exampleModalLongTitle">Title</h5>
+		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+		  				</button>
+					</div>
+					<div class="modal-body">
+						<b>author:</b> &nbsp;&nbsp; Julian Roth <br>
+						<br>
+					</div>
+					<div class="modal-footer">
+		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  				<a href="https://editor.p5js.org/mathmerizing/sketches/ZZpfUb3S0" class="btn btn-primary">Go to project</a>
+					</div>
+	  			</div>
+			</div>
+		  </div>
+		  
+		<!-- FourInRowModal -->
+  		<div class="modal fade bd-example-modal-lg" id="fourInRowModal" tabindex="-1" role="dialog" aria-labelledby="fourInRowModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+	  			<div class="modal-content">
+					<div class="modal-header">
+		  				<h5 class="modal-title" id="exampleModalLongTitle">Creating an AI for Four In a Row</h5>
+		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+		  				</button>
+					</div>
+					<div class="modal-body">
+						<b>authors:</b> &nbsp;&nbsp; Yerso Checya Sinti, Julian Roth <br>
+						<br>
+
+						<p style="text-align:justify;">
+							Starting this project, we wanted to build our frist <a href="https://play.google.com/store/apps/details?id=com.mathmerizing.fourinarow">Android app</a>.
+							Our initial development has been for the command line though and some features are only available in the command line version.
+						</p>
+
+						<p style="text-align:justify;">
+							We implemented the popular board game "Four In A Row" and created a bot, which used <a href="https://en.wikipedia.org/wiki/Minimax">Minimax</a> and 
+							<a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">Alpha-beta pruning</a>. The Desktop version also uses multi-threading to speed up the bots computation.
+							A detailed explanation of our Minimax implementation and our board evaluation function can be found <a href="https://github.com/mathmerizing/Four_In_A_Row/wiki">here</a>.
+						</p>
+
+						<p style="text-align:justify;">
+							The Minimax algorithm is sufficient to beat most human players, if the computer is calculating at least 8 plies into the future.
+							However, it can still be defeated. Hence, we tried to create a stronger bot by implementing <a href="http://nn.cs.utexas.edu/downloads/papers/stanley.gecco02_1.pdf">NEAT</a>, a genetic algorithm.
+							Each genome is a fully connected neural network with 42 input neurons (= number of game board entries) and 7 output neurons (= columns in which tile can be placed).
+							The genomes play against a short-sighted Minimax bot. Throughout the training process the network grows and might eventually look like:
+						</p>
+
+						<center><img src="res/fourInRow/genome.png"  style="padding-left:10%; padding-right:10%; width:100%"></center> <br>
+
+						<p style="text-align:justify;">
+							Although we have tried different starting positions, the NEAT algorithm wasn't able to generalize or learn useful strategies.
+							There are simply too many weights in the neural network, which hinders the convergence of the genetic algorithm to a good bot.
+							Therefore this type of opponent hasn't been implemented in the Android app.
+						</p>
+
+						<p style="text-align:justify;">
+							For a more detailed documentation of our project please check out <a href="https://github.com/mathmerizing/Four_In_A_Row">the project's GitHub page</a>.
+							</p>
+
+					</div>
+					<div class="modal-footer">
+		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  				<a href="https://github.com/mathmerizing/Four_In_A_Row" class="btn btn-primary">Go to project</a>
+					</div>
+	  			</div>
+			</div>
+		</div>
 
 
 		<div class="container-fluid bg-1 text-center">
@@ -225,8 +300,13 @@
 							<img class="card-img-top" src="res/squat.png">
 							<div class="card-body">
 								<h4 class="card-title">Squat Workout Camera</h4>
-						  		<p class="card-text">Application which uses PoseNet to help users with their squat workout.</p>
-						  		<a href="https://editor.p5js.org/mathmerizing/sketches/ZZpfUb3S0" class="btn btn-primary">Go to project</a>
+								<p class="card-text">Application which uses PoseNet to help users with their squat workout.</p>
+								<!-- Button trigger modal
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#squatModal">
+									More info
+								</button>
+								 -->
+								<a href="https://editor.p5js.org/mathmerizing/sketches/ZZpfUb3S0" class="btn btn-primary">Go to project</a>
 							</div>
 					  	</div>
 					</div>
@@ -242,7 +322,11 @@
 							<img class="card-img-top" src="res/four_in_row_rescaled.png">
 							<div class="card-body">
 								<h4 class="card-title">Four In A Row</h4>
-						  		<p class="card-text">A Java version of the game "Four In A Row". Implemented Minimax, Alpha-beta pruning and NEAT.</p>
+								<p class="card-text">A Java version of the game "Four In A Row". Implemented Minimax, Alpha-beta pruning and NEAT.</p>
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fourInRowModal">
+									More info
+  								</button>
 						  		<a href="https://github.com/mathmerizing/Four_In_A_Row" class="btn btn-primary">Go to project</a>
 							</div>
 					  	</div>

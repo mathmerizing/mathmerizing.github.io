@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163664390-1"></script>
 		<script>
@@ -16,17 +17,87 @@
     	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
     	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			<style>
+				.carousel-control-prev-icon {
+					height: 100px;
+					width: 100px;
+					outline: black;
+					background-size: 50%, 50%;
+					border-radius: 50%;
+					border: 8px dashed #20B2AA;
+					background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2320B2AA' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+				}
+				.carousel-control-next-icon {
+					height: 100px;
+					width: 100px;
+					outline: black;
+					background-size: 50%, 50%;
+					border-radius: 50%;
+					border: 8px dashed #20B2AA;
+					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2320B2AA' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+				}
+
+				.carousel-control-next-icon:after
+				{
+					font-size: 55px;
+					color: #20B2AA;
+				}
+
+				.carousel-control-prev-icon:after
+				{
+					font-size: 55px;
+					color: #20B2AA;
+				}
+
+				.carousel-inner {
+					background-color: white !important;
+				}
+
+				.carousel-indicators li {
+				    border-radius: 12px;
+				    width: 12px;
+				    height: 12px;
+				    background-color: #404040;
+				}
+
+				.carousel-indicators .active{
+    			background-color: blue;
+				}
+
+				ul.timeline {
+					list-style-type: none;
+					position: relative;
+				}
+				ul.timeline:before {
+					content: ' ';
+					background: #B2CAB3;
+					display: inline-block;
+					position: absolute;
+					left: 29px;
+					width: 2px;
+					height: 120%;
+					z-index: 400;
+				}
+				ul.timeline > li {
+					margin: 20px 0;
+					padding-left: 20px;
+				}
+				ul.timeline > li:before {
+					content: ' ';
+					background: white;
+					display: inline-block;
+					position: absolute;
+					border-radius: 50%;
+					border: 3px solid #228B22;
+					left: 20px;
+					width: 20px;
+					height: 20px;
+					z-index: 400;
+				}
+		</style>
 	</head>
 	<body>
-
-		<nav class="nav nav-pills flex-column flex-sm-row">
-			<a class="flex-sm-fill text-sm-center nav-link active" href="#">Home</a>
-			<a class="flex-sm-fill text-sm-center nav-link" href="\cv">CV</a>
-			<a class="flex-sm-fill text-sm-center nav-link" href="\about">About Me</a>
-		  </nav>
-
-		<br>
 
 		<header class="bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
@@ -44,219 +115,6 @@
   </header>
 <br>
 
-  		<!-- Modals == PopUp Windows-->
-
-  		<!-- SchrodingerModal -->
-  		<div class="modal fade bd-example-modal-lg" id="schrodingerModal" tabindex="-1" role="dialog" aria-labelledby="schrodingerModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-	  			<div class="modal-content">
-					<div class="modal-header">
-		  				<h5 class="modal-title" id="exampleModalLongTitle">Solving the Schrödinger Equation with deal.ii</h5>
-		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-		  				</button>
-					</div>
-					<div class="modal-body">
-						<b>authors:</b> &nbsp;&nbsp; Leon Samolik, Max Schröder, Julian Roth <br>
-						<br>
-
-						<p style="text-align:justify;">
-						This group project is the result of a lecture on programming finite elements in C++
-						held at the Leibniz Universität Hannover in the winter semester 2019/20. We decided to simulate the quantum harmonic oscillator numerically.
-						For that purpose, we discretized the Schrödinger equation with the harmonic oscillator as the potential, i.e. <br>
-						</p>
-
-						<center><img src="res/schrodinger.svg"  style="padding-left:10%; padding-right:10%;"></center> <br>
-
-						<p style="text-align:justify;">
-						To apply the finite element method, we discretized the time derivative with the one step θ-scheme. The resulting equation
-						was split into its real and imaginary part and then transformed into a weak form by multiplication with a test function and integration by parts.
-						In a 2D setting a direct solver, like the LU decomposition, turned out to be sufficient to solve our linear equation system.
-						Additionally, the inverse only needed to be calculated once, since the system matrix remained constant throughout time.
-						</p>
-
-						<p style="text-align:justify;">
-						In the animation below we started with a normal distribution as our initial condition
-						and applied homogeneous Dirichlet conditions. This simulates an imprisoned quantum particle.
-						The particle is being reflected off the boundary and with time moves towards the origin
-						where it interferes with itself.
-						</p>
-
-						<center><video src="res/schrodinger/schrodinger_animation_3d.mp4" alt=”Schrodinger video” controls style="width: 90%;"></center>
-						<br>
-
-						<p style="text-align:justify;">
-						For more results and a more detailed documentation of our project please check out <a href="https://github.com/mfschroeder/Programming_FE_Cpp#">the project's GitHub page</a>.
-						</p>
-					</div>
-					<div class="modal-footer">
-		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  				<a href="https://github.com/mfschroeder/Programming_FE_Cpp#" class="btn btn-primary">Go to project</a>
-					</div>
-	  			</div>
-			</div>
-		  </div>
-
-
-		<!-- BasketballModal -->
-  		<div class="modal fade bd-example-modal-lg" id="basketballModal" tabindex="-1" role="dialog" aria-labelledby="basketballModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-	  			<div class="modal-content">
-					<div class="modal-header">
-		  				<h5 class="modal-title" id="exampleModalLongTitle">Detecting basketballs in a video and plotting its trajectory</h5>
-		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-		  				</button>
-					</div>
-					<div class="modal-body">
-						<b>author:</b> &nbsp;&nbsp; Julian Roth <br>
-						<br>
-
-						<p style="text-align:justify;">
-							The goal of this project was to be able to analyze the release angle when shooting a basketball.
-							Using <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">Tensorflow's Object Detection API</a>, I applied transfer learning to be able to detect basketballs in images.
-							Thus I was able to go through each frame of a video and draw a bounding box around the basketball.
-							This can be seen in the video below.
-						</p>
-
-						<center><video src="res/basketball/shot_video.mp4" alt=”shot video” controls style="width: 40%;"></center>
-						<br>
-
-						<p style="text-align:justify;">
-							Using the center of the boxes surrounding the basketball, there are now multiple points which
-							can be used for a quadratic regression, i.e. we can fit a parabola to the basketball's trajectory.
-							When running the Python script, there are two sliders which can be adjusted manually to figure out the exact release angle:
-							<ul>
-								<li>
-									<i>release:</i> Move the release point along the parabola of the basketball shot.
-								</li>
-								<li>
-									<i>frame number:</i> Choose the frame of the video which is being shown.
-								</li>
-							</ul>
-						</p>
-
-						<p style="text-align:justify;">
-							For the video above we get the following analysis:
-						</p>
-
-						<center><img src="res/basketball/analyzed_shot.png"  style="padding-left:10%; padding-right:10%; width: 90%;"></center> <br>
-						<br>
-
-						<p style="text-align:justify;">
-						For more results and a more detailed documentation of our project please check out <a href="https://github.com/mathmerizing/Basketball_Shot_Analysis#">the project's GitHub page</a>.
-						</p>
-					</div>
-					<div class="modal-footer">
-		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  				<a href="https://github.com/mathmerizing/Basketball_Shot_Analysis#" class="btn btn-primary">Go to project</a>
-					</div>
-	  			</div>
-			</div>
-		  </div>
-
-		  <!-- SquatModal -->
-  		<div class="modal fade bd-example-modal-lg" id="squatModal" tabindex="-1" role="dialog" aria-labelledby="squatModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-	  			<div class="modal-content">
-					<div class="modal-header">
-		  				<h5 class="modal-title" id="exampleModalLongTitle">Detecting squats from the camera feed</h5>
-		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-		  				</button>
-					</div>
-					<div class="modal-body">
-						<b>authors:</b> &nbsp;&nbsp; Yerso Checya Sinti, Julian Roth <br>
-						<br>
-
-						<p style="text-align:justify;">
-							This is a working online prototype of a squat detection application.
-							Using Posenet and a simple heuristic, we are able to count the user's squats, if he/she stays in one place.
-						</p>
-
-						<br>
-
-						<p style="text-align:justify;">
-							<b>How to use the online demo:</b>
-							<ol>
-								<li>
-									Push the button "Try it here", which is below these instructions.
-								</li>
-								<li>
-									Enable your browser to use the camera.
-								</li>
-								<li>
-									Then a countdown starts and you should go to the place, in which you want to do the squats.
-								</li>
-								<li>
-									When the countdown is done, your pose will be detected and you can do some squats.
-								</li>
-							</ol>
-						</p>
-
-						<center><a class="btn btn-primary" href="\squat">Try it here</a></center>
-
-					</div>
-					<div class="modal-footer">
-		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  				<a href="https://editor.p5js.org/mathmerizing/sketches/ZZpfUb3S0" class="btn btn-primary">Go to project</a>
-					</div>
-	  			</div>
-			</div>
-		  </div>
-
-		<!-- FourInRowModal -->
-  		<div class="modal fade bd-example-modal-lg" id="fourInRowModal" tabindex="-1" role="dialog" aria-labelledby="fourInRowModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-	  			<div class="modal-content">
-					<div class="modal-header">
-		  				<h5 class="modal-title" id="exampleModalLongTitle">Creating an AI for Four In a Row</h5>
-		  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-		  				</button>
-					</div>
-					<div class="modal-body">
-						<b>authors:</b> &nbsp;&nbsp; Yerso Checya Sinti, Julian Roth <br>
-						<br>
-
-						<p style="text-align:justify;">
-							Starting this project, we wanted to build our frist <a href="https://play.google.com/store/apps/details?id=com.mathmerizing.fourinarow">Android app</a>.
-							Our initial development has been for the command line though and some features are only available in the command line version.
-						</p>
-
-						<p style="text-align:justify;">
-							We implemented the popular board game "Four In A Row" and created a bot, which used <a href="https://en.wikipedia.org/wiki/Minimax">Minimax</a> and
-							<a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">Alpha-beta pruning</a>. The Desktop version also uses multi-threading to speed up the bots computation.
-							A detailed explanation of our Minimax implementation and our board evaluation function can be found <a href="https://github.com/mathmerizing/Four_In_A_Row/wiki">here</a>.
-						</p>
-
-						<p style="text-align:justify;">
-							The Minimax algorithm is sufficient to beat most human players, if the computer is calculating at least 8 plies into the future.
-							However, it can still be defeated. Hence, we tried to create a stronger bot by implementing <a href="http://nn.cs.utexas.edu/downloads/papers/stanley.gecco02_1.pdf">NEAT</a>, a genetic algorithm.
-							Each genome is a fully connected neural network with 42 input neurons (= number of game board entries) and 7 output neurons (= columns in which tile can be placed).
-							The genomes play against a short-sighted Minimax bot. Throughout the training process the network grows and might eventually look like:
-						</p>
-
-						<center><img src="res/fourInRow/genome.png"  style="padding-left:10%; padding-right:10%; width:100%"></center> <br>
-
-						<p style="text-align:justify;">
-							Although we have tried different starting positions, the NEAT algorithm wasn't able to generalize or learn useful strategies.
-							There are simply too many weights in the neural network, which hinders the convergence of the genetic algorithm to a good bot.
-							Therefore this type of opponent hasn't been implemented in the Android app.
-						</p>
-
-						<p style="text-align:justify;">
-							For a more detailed documentation of our project please check out <a href="https://github.com/mathmerizing/Four_In_A_Row">the project's GitHub page</a>.
-							</p>
-
-					</div>
-					<div class="modal-footer">
-		  				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  				<a href="https://github.com/mathmerizing/Four_In_A_Row" class="btn btn-primary">Go to project</a>
-					</div>
-	  			</div>
-			</div>
-		</div>
 
 
 		<div class="container-fluid bg-1 text-center">
@@ -267,128 +125,91 @@
 			<h1>Projects</h1>
 			<hr style="width:80%;">
 
-			<h2>Numerical Analysis</h2>
 
-			<!-- container/NumericalAnalysis-->
-			<div class="container-fluid">
-				<!-- first row-->
-				<div class="row">
 
-					<!-- first project-->
-					<div class="col-md">
-						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="res/schrodinger.svg"  style="padding-left:10%; padding-right:10%;">
-							<div class="card-body">
-								<h4 clacss="card-title">Schrödinger equation</h4>
-								<p class="card-text">Simulating the Quantum Harmonic Oscillator though the FEM in deal.ii.</p>
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schrodingerModal">
-									More info
-  								</button>
-						  		<a href="https://github.com/mfschroeder/Programming_FE_Cpp#" class="btn btn-primary">Go to project</a>
+		<!-- Code snippet from: https://stackoverflow.com/questions/48824568/bootstrap-4-carousel-sliders-not-working/48826241 -->
+		<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+	    <ol class="carousel-indicators">
+	        <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+	        <li data-target="#carouselIndicators" data-slide-to="1"></li>
+	        <li data-target="#carouselIndicators" data-slide-to="2"></li>
+	    </ol>
+	    <div class="carousel-inner">
+	        <div class="carousel-item active">
+	            <img class="d-block w-100" src="res/autoencoder.svg" alt="Autoencoder Slide">
+	            <div class="carousel-caption d-none d-md-block">
+								<h5 style="color:blue">Autoencoder from Scratch</h5>
+								<p style="color:blue">Numpy implementation of Denoising Autoencoders, Variational Autoencoders and Generative Adversarial Networks</p>
+								<a href="https://julianroth.org/documentation/neural_networks" class="btn btn-primary">Go to project</a>
+	            </div>
+	        </div>
+					<div class="carousel-item">
+	            <img class="d-block w-100" src="res/multigrid_scratch.svg" style="color:black" alt="Multigrid Python Slide">
+							<div class="carousel-caption d-none d-md-block">
+								<h5 style="color:blue">Multigrid from Scratch</h5>
+								<p style="color:blue">Python implementation of the Geometric Multigrid Method</p>
+								<a href="https://julianroth.org/documentation/multigrid" class="btn btn-primary">Go to project</a>
+								<br>
 							</div>
-					  	</div>
-					</div>
-
-					<!-- second project
-					<div class="col-md">
-						<div class="card bg-light mb-3">
-							// enter image source !!!
-							<center><img class="card-img-top" style="width:35%;padding:5%;min-width:150px;"></center>
-							<div class="card-body">
-						  		<h4 class="card-title">Bachelor thesis</h4>
-						  		<p class="card-text">Project description: I haven't started yet.</p>
-						  		<a href="#" class="btn btn-primary">Go somewhere</a>
+	        </div>
+	        <div class="carousel-item">
+	            <img class="d-block w-100" src="res/how_it_works.jpg" alt="Movement Arcade Slide">
+							<div class="carousel-caption d-none d-md-block">
+								<h5 style="color:blue">Movement Arcade</h5>
+								<p style="color:blue">Movement controlled arcade games created during the WirVsVirus Hackathon 2020</p>
+								<a href="https://julianroth.org/wirvsvirus/" class="btn btn-primary">Go to project</a>
+								<br>
 							</div>
-					  	</div>
-					</div>
-					-->
+	        </div>
 
-				  </div>
+	    </div>
+			<a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+	        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	        <span class="sr-only">Previous</span>
+	    </a>
+	    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+	        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	        <span class="sr-only">Next</span>
+	    </a>
+	</div>
+
+	<br>
+	<br>
+
+	<h1><center>CV</center></h1>
+	<hr style="width:80%;">
+
+	<div class="container mt-5 mb-5">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<!-- <h4>My Time Line</h4> -->
+				<ul class="timeline">
+					<li>
+						<a class="float-left" style="color:#228B22">B.Sc. Mathematics</a>
+						<a class="float-right" style="color:#228B22">Expected: October 2020</a>
+						<br>
+					</li>
+					<li>
+						<a class="float-left" style="color:#228B22">High School Diploma</a>
+						<a class="float-right" style="color:#228B22">June 2017</a>
+						<br>
+						<p style="text-align:justify;">Graduated from Schillerschule Hannover with the German high school diploma, Abitur (1.2 GPA), and the international high school diploma, IB diploma (35 points).</p>
+					</li>
+					<li>
+						<a class="float-left" style="color:#228B22">School Exchange in USA</a>
+						<a class="float-right" style="color:#228B22">2014/2015</a>
+						<br>
+						<p style="text-align:justify;">Participated in a 10 month long high school exchange in California.</p>
+					</li>
+					<li>
+						<a class="float-left" style="color:#228B22">Birth</a>
+						<a class="float-right" style="color:#228B22">20 September, 1998</a>
+					</li>
+				</ul>
 			</div>
+		</div>
+	</div>
 
-			<h2>Data Science</h2>
-
-			<!-- container/DataScience-->
-			<div class="container-fluid">
-
-								<!-- first row-->
-							<div class="row">
-
-								<!-- first project-->
-								<div class="col-md">
-									<div class="card bg-light mb-3">
-										<img class="card-img-top" src="res/how_it_works.jpg">
-										<div class="card-body">
-											<h4 class="card-title">Movement Arcade</h4>
-											<p class="card-text">Movement controlled arcade games created during the WirVsVirus Hackathon 2020.</p>
-												<a href="https://julianroth.org/wirvsvirus/" class="btn btn-primary">Go to project</a>
-										</div>
-										</div>
-								</div>
-
-								</div>
-
-				<!-- second row-->
-				<div class="row">
-
-					<!-- first project-->
-					<div class="col-md">
-						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="res/basketball.png">
-							<div class="card-body">
-								<h4 class="card-title">Basketball Shot Analysis</h4>
-								<p class="card-text">Plotting the trajectory of a basketball shot with Tensorflow's Object Detection API.</p>
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basketballModal">
-									More info
-  								</button>
-						  		<a href="https://github.com/mathmerizing/Basketball_Shot_Analysis" class="btn btn-primary">Go to project</a>
-							</div>
-					  	</div>
-					</div>
-
-					<!-- second project-->
-					<div class="col-md">
-						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="res/squat.png">
-							<div class="card-body">
-								<h4 class="card-title">Squat Workout Camera</h4>
-								<p class="card-text">Application which uses PoseNet to help users with their squat workout.</p>
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#squatModal">
-									More info
-								</button>
-								<a href="https://editor.p5js.org/mathmerizing/sketches/ZZpfUb3S0" class="btn btn-primary">Go to project</a>
-							</div>
-					  	</div>
-					</div>
-
-				</div>
-
-				  <!-- third row-->
-				<div class="row">
-
-					<!-- first project-->
-					<div class="col-md">
-						<div class="card bg-light mb-3">
-							<img class="card-img-top" src="res/four_in_row_rescaled.png">
-							<div class="card-body">
-								<h4 class="card-title">Four In A Row</h4>
-								<p class="card-text">A Java version of the game "Four In A Row". Implemented Minimax, Alpha-beta pruning and NEAT.</p>
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fourInRowModal">
-									More info
-  								</button>
-						  		<a href="https://github.com/mathmerizing/Four_In_A_Row" class="btn btn-primary">Go to project</a>
-							</div>
-					  	</div>
-					</div>
-
-				  </div>
-			</div>
-
-		</div><!-- /.container -->
 
 		<hr style="width:80%;">
 

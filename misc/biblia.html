@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Text Display</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  </head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mb-4">Fragmenty z Biblii</h1>  </head>
+    <div id="bible-container"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+  .card {
+      border-radius: 1rem; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      overflow: hidden;
+  }
+  .card-body {
+    background-color: #f8f9fa; /* Light background color */
+  }
+  .card-title {
+    color: #343a40; /* Darker title color */
+  }
+  /* Color Palettes (10 palettes) */
+  .palette-1 .card-body { background-color: #e9ecef; } /* Light Gray */
+  .palette-1 .card-title { color: #212529; } /* Dark Gray */
+
+  .palette-2 .card-body { background-color: #d1ecf1; } /* Light Teal */
+  .palette-2 .card-title { color: #0b5ed7; } /* Blue */
+
+  .palette-3 .card-body { background-color: #ffeeba; } /* Light Yellow */
+  .palette-3 .card-title { color: #856404; } /* Brown */
+
+  .palette-4 .card-body { background-color: #ced4da; } /* Light Grayish Blue */
+  .palette-4 .card-title { color: #495057; } /* Grayish Blue */
+
+  .palette-5 .card-body { background-color: #f0f0f5; } /* Very Light Gray */
+  .palette-5 .card-title { color: #333; } /* Dark Gray */
+
+  .palette-6 .card-body { background-color: #e0f2f7; } /* Light Blue Gray */
+  .palette-6 .card-title { color: #0d6efd; } /* Blue */
+
+  .palette-7 .card-body { background-color: #fff5cc; } /* Light Yellowish */
+  .palette-7 .card-title { color: #664d00; } /* Darker Yellow */
+
+  .palette-8 .card-body { background-color: #f5f0ff; } /* Light Lavender */
+  .palette-8 .card-title { color: #512da8; } /* Purple */
+
+  .palette-9 .card-body { background-color: #d8f3dc; } /* Light Greenish */
+  .palette-9 .card-title { color: #2e7d32; } /* Green */
+
+  .palette-10 .card-body { background-color: #ffebee; } /* Light Reddish */
+  .palette-10 .card-title { color: #b71c1c; } /* Dark Red */
+
+</style>
+
+<script>
+    function loadAndDisplayBibleText(filePath) {
+      fetch(filePath)
+        .then(response => response.text())
+        .then(text => {
+          const bibleContainer = document.getElementById('bible-container');
+          const blocks = text.split('\n\n');
+
+          blocks.forEach(block => {
+            if (block.trim() !== "") {
+              const lines = block.split('\n');
+              if (lines.length >= 2) {
+                const verseNumber = lines[0].trim();
+                const verseText = lines.slice(1).join('\n').trim();
+
+                const card = document.createElement('div');
+                card.classList.add('card', 'mb-3'); // Bootstrap card classes
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body');
+
+                // Add a random color palette class (2 to 10):
+                const paletteIndex = Math.floor(Math.random() * 9) + 2;
+                card.classList.add(`palette-${paletteIndex}`);
+
+                const number = document.createElement('h5');
+                number.classList.add('card-title', 'verse-number');
+                number.textContent = verseNumber;
+                cardBody.appendChild(number);
+
+                const text = document.createElement('p');
+                text.classList.add('card-text', 'verse-text');
+                text.textContent = verseText;
+                cardBody.appendChild(text);
+
+                card.appendChild(cardBody);
+                bibleContainer.appendChild(card);
+              }
+            }
+          });
+        })
+        .catch(error => console.error("Error loading file:", error));
+    }
+
+    loadAndDisplayBibleText('biblia.txt');
+</script>
+
+</body>
+</html>

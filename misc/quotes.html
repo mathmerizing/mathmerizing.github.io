@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fragmenty z Biblii</title>
+    <title>Quotes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  </head>
 <body>
 
 <div class="container">
-    <h1 class="text-center mb-4">Fragmenty z Biblii</h1>  </head>
+    <h1 class="text-center mb-4">Quotes</h1>  </head>
     <div id="bible-container"></div>
 </div>
 
@@ -73,8 +73,19 @@
             if (block.trim() !== "") {
               const lines = block.split('\n');
               if (lines.length >= 2) {
-                const verseNumber = lines[0].trim();
-                const verseText = lines.slice(1).join('\n').trim();
+                let verseNumberLine = lines[0].trim(); // Get the entire verse number line
+                let verseText = lines.slice(1).join('\n').trim();
+                verseText = verseText.replace(/\n/g, '<br>');
+
+                let linkHref = null; // Store the link href
+                let verseNumber = verseNumberLine; // Store the clean verse number
+
+                // *** KEY CHANGE: Parse the link information ***
+                const linkMatch = verseNumberLine.match(/\[link="([^"]*)"\]/);
+                if (linkMatch) {
+                  linkHref = linkMatch[1]; // Extract the href value
+                  verseNumber = verseNumberLine.replace(/\[link="([^"]*)"\]/, '').trim(); // Remove the link part from the verse number
+                }
 
                 const card = document.createElement('div');
                 card.classList.add('card', 'mb-3'); // Bootstrap card classes
@@ -87,12 +98,24 @@
 
                 const number = document.createElement('h5');
                 number.classList.add('card-title', 'verse-number');
-                number.textContent = verseNumber;
+                
+                if (linkHref) {
+                  const link = document.createElement('a');
+                  link.href = linkHref;
+                  link.textContent = verseNumber;
+                  number.appendChild(link);
+                } else {
+                  number.textContent = verseNumber;
+                }
+
                 cardBody.appendChild(number);
+
 
                 const text = document.createElement('p');
                 text.classList.add('card-text', 'verse-text');
-                text.textContent = verseText;
+                
+                // *** KEY CHANGE: Use innerHTML ***
+                text.innerHTML = verseText;  // Use innerHTML to render HTML
                 cardBody.appendChild(text);
 
                 card.appendChild(cardBody);
@@ -104,7 +127,7 @@
         .catch(error => console.error("Error loading file:", error));
     }
 
-    loadAndDisplayBibleText('biblia.txt');
+    loadAndDisplayBibleText('quotes.txt');
 </script>
 
 </body>

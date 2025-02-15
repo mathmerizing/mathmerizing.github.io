@@ -4,108 +4,223 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fragmenty z Biblii</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  </head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .card-body {
+            background-color: #f8f9fa;
+        }
+        .card-title {
+            color: #343a40;
+        }
+
+        /* Color Palettes */
+        .palette-1 .card-body { background-color: #e9ecef; }
+        .palette-1 .card-title { color: #212529; }
+        .palette-2 .card-body { background-color: #d1ecf1; }
+        .palette-2 .card-title { color: #0b5ed7; }
+        .palette-3 .card-body { background-color: #ffeeba; }
+        .palette-3 .card-title { color: #856404; }
+        .palette-4 .card-body { background-color: #ced4da; }
+        .palette-4 .card-title { color: #495057; }
+        .palette-5 .card-body { background-color: #f0f0f5; }
+        .palette-5 .card-title { color: #333; }
+        .palette-6 .card-body { background-color: #e0f2f7; }
+        .palette-6 .card-title { color: #0d6efd; }
+        .palette-7 .card-body { background-color: #fff5cc; }
+        .palette-7 .card-title { color: #664d00; }
+        .palette-8 .card-body { background-color: #f5f0ff; }
+        .palette-8 .card-title { color: #512da8; }
+        .palette-9 .card-body { background-color: #d8f3dc; }
+        .palette-9 .card-title { color: #2e7d32; }
+        .palette-10 .card-body { background-color: #ffebee; }
+        .palette-10 .card-title { color: #b71c1c; }
+    </style>
+</head>
 <body>
+    <div class="container">
+        <h1 class="text-center mb-4">Fragmenty z Biblii</h1>
+        <button id="sort-button" class="btn btn-primary mb-3">Sortuj według rozdziału</button>
+        <div id="bible-container">
+            <div id="loading-indicator" class="text-center">Loading...</div>
+            <div id="error-message" class="text-center text-danger" style="display: none;"></div>
+        </div>
+    </div>
 
-<div class="container">
-    <h1 class="text-center mb-4">Fragmenty z Biblii</h1>  </head>
-    <div id="bible-container"></div>
-</div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let originalVerses = [];
+        let currentVerses = [];
 
-<style>
-  .card {
-      border-radius: 1rem; /* Rounded corners */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      overflow: hidden;
-  }
-  .card-body {
-    background-color: #f8f9fa; /* Light background color */
-  }
-  .card-title {
-    color: #343a40; /* Darker title color */
-  }
-  /* Color Palettes (10 palettes) */
-  .palette-1 .card-body { background-color: #e9ecef; } /* Light Gray */
-  .palette-1 .card-title { color: #212529; } /* Dark Gray */
+        function loadAndDisplayBibleText(filePath) {
+            const bibleContainer = document.getElementById('bible-container');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const errorMessage = document.getElementById('error-message');
 
-  .palette-2 .card-body { background-color: #d1ecf1; } /* Light Teal */
-  .palette-2 .card-title { color: #0b5ed7; } /* Blue */
+            loadingIndicator.style.display = 'block';
+            errorMessage.style.display = 'none';
+            bibleContainer.innerHTML = '';
 
-  .palette-3 .card-body { background-color: #ffeeba; } /* Light Yellow */
-  .palette-3 .card-title { color: #856404; } /* Brown */
+            fetch(filePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    loadingIndicator.style.display = 'none';
 
-  .palette-4 .card-body { background-color: #ced4da; } /* Light Grayish Blue */
-  .palette-4 .card-title { color: #495057; } /* Grayish Blue */
+                    const blocks = text.split('\n\n');
+                    const verses = [];
 
-  .palette-5 .card-body { background-color: #f0f0f5; } /* Very Light Gray */
-  .palette-5 .card-title { color: #333; } /* Dark Gray */
+                    blocks.forEach(block => {
+                        if (block.trim() !== "") {
+                            const lines = block.split('\n');
+                            if (lines.length >= 2) {
+                                const verseNumber = lines[0].trim();
+                                const verseText = lines.slice(1).join('\n').trim();
 
-  .palette-6 .card-body { background-color: #e0f2f7; } /* Light Blue Gray */
-  .palette-6 .card-title { color: #0d6efd; } /* Blue */
+                                // Improved regex to handle various formats
+                              const match = verseNumber.match(/^(.*?)\s(\d+)(?:,?\s*(\d+[a-c]?)(?:-\d+[a-c]?)?)?$/);
 
-  .palette-7 .card-body { background-color: #fff5cc; } /* Light Yellowish */
-  .palette-7 .card-title { color: #664d00; } /* Darker Yellow */
+                              if (match) {
+                                  const book = match[1];
+                                  const chapter = parseInt(match[2], 10);
+                                  const verseRange = match[3]; // Store the verse range string
 
-  .palette-8 .card-body { background-color: #f5f0ff; } /* Light Lavender */
-  .palette-8 .card-title { color: #512da8; } /* Purple */
+                                  verses.push({ book, chapter, verseRange, text: verseText });
+                              } else {
+                                  console.warn("Invalid verse number format:", verseNumber);
+                              }
+                            }
+                        }
+                    });
 
-  .palette-9 .card-body { background-color: #d8f3dc; } /* Light Greenish */
-  .palette-9 .card-title { color: #2e7d32; } /* Green */
+                    originalVerses = verses;
+                    currentVerses = verses;
 
-  .palette-10 .card-body { background-color: #ffebee; } /* Light Reddish */
-  .palette-10 .card-title { color: #b71c1c; } /* Dark Red */
+                    displayVerses(currentVerses);
 
-</style>
+                    const sortButton = document.getElementById('sort-button');
+                    sortButton.addEventListener('click', () => {
+                        currentVerses = sortVerses(currentVerses);
+                        displayVerses(currentVerses);
+                    });
 
-<script>
-    function loadAndDisplayBibleText(filePath) {
-      fetch(filePath)
-        .then(response => response.text())
-        .then(text => {
-          const bibleContainer = document.getElementById('bible-container');
-          const blocks = text.split('\n\n');
+                })
+                .catch(error => {
+                    loadingIndicator.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = `Error loading file: ${error.message}`;
+                    console.error("Error loading file:", error);
+                });
+        }
 
-          blocks.forEach(block => {
-            if (block.trim() !== "") {
-              const lines = block.split('\n');
-              if (lines.length >= 2) {
-                const verseNumber = lines[0].trim();
-                const verseText = lines.slice(1).join('\n').trim();
+        function displayVerses(verses) {
+            const bibleContainer = document.getElementById('bible-container');
+            bibleContainer.innerHTML = '';
 
+            verses.forEach(verse => {
                 const card = document.createElement('div');
-                card.classList.add('card', 'mb-3'); // Bootstrap card classes
+                card.classList.add('card', 'mb-3');
+
                 const cardBody = document.createElement('div');
                 cardBody.classList.add('card-body');
 
-                // Add a random color palette class (2 to 10):
                 const paletteIndex = Math.floor(Math.random() * 9) + 2;
                 card.classList.add(`palette-${paletteIndex}`);
 
                 const number = document.createElement('h5');
                 number.classList.add('card-title', 'verse-number');
-                number.textContent = verseNumber;
+                number.textContent = `${verse.book} ${verse.chapter}`;
+
+                if (verse.verseRange) {
+                  number.textContent += `, ${verse.verseRange}`; // Add the verse range if it exists
+                }
+
                 cardBody.appendChild(number);
 
                 const text = document.createElement('p');
                 text.classList.add('card-text', 'verse-text');
-                text.textContent = verseText;
+                text.textContent = verse.text;
                 cardBody.appendChild(text);
 
                 card.appendChild(cardBody);
                 bibleContainer.appendChild(card);
+            });
+        }
+
+        function sortVerses(verses) {
+          const bookList = ['Rdz', 'Wj', 'Kpł', 'Lb', 'Pwt', 'Joz', 'Sdz', 'Rt', '1 Sm', '2 Sm', '1 Krl', '2 Krl', '1 Krn', '2 Krn', 'Ezd', 'Ne', 'Est', 'Hi', 'Ps', 'Prz', 'Koh', 'Pnp', 'Iz Izajasza', 'Jr', 'Lm', 'Ez', 'Dn', 'Oz', 'Jl', 'Am', 'Ab', 'Jon', 'Mi', 'Na', 'Ha', 'So', 'Ag', 'Za', 'Ml', 'Mt', 'Mk', 'Łk', 'J', 'Dz', 'Rz', '1 Kor', '2 Kor', 'Ga', 'Ef', 'Flp', 'Kol', '1 Tes', '2 Tes', '1 Tm', '2 Tm', 'Tt', 'Flm', 'Hbr', 'Jk', '1 P', '2 P', '1 J', '2 J', '3 J', 'Jud', 'Ap'];
+          return [...verses].sort((a, b) => {
+              const aBookIndex = bookList.indexOf(a.book);
+              const bBookIndex = bookList.indexOf(b.book);
+              
+              if (aBookIndex === -1 || bBookIndex === -1) {
+                  console.error("Invalid book name found:", a.book, b.book); // Report the error
+                  return 0; // Don't change order if an error occurred
               }
-            }
+
+              if (aBookIndex !== bBookIndex) {
+                  return aBookIndex - bBookIndex;
+              }
+
+              const chapterOrder = a.chapter - b.chapter;
+              if (chapterOrder !== 0) return chapterOrder;
+
+              // Improved verse range sorting
+              const verseRangeA = a.verseRange || "";
+              const verseRangeB = b.verseRange || "";
+
+              const parseVerseRange = (range) => {
+                  if (!range) return { start: null, end: null };
+
+                  const parts = range.split('-');
+                  const start = parts[0];
+                  const end = parts.length > 1 ? parts[1] : start; // If no end, start = end
+
+                  const parseVersePart = (part) => {
+                      const match = part.match(/(\d+)([a-c]?)/);
+                      if (match) {
+                        return { number: parseInt(match[1], 10), letter: match[2] || '' };
+                      }
+                      return { number: parseInt(part, 10), letter: '' }; // Handle cases without letters
+                  };
+                  return { start: parseVersePart(start), end: parseVersePart(end) };
+              };
+
+              const rangeA = parseVerseRange(verseRangeA);
+              const rangeB = parseVerseRange(verseRangeB);
+
+              // Compare start numbers
+              if (rangeA.start.number !== rangeB.start.number) {
+                  return rangeA.start.number - rangeB.start.number;
+              }
+              // If start numbers are the same, compare start letters
+              if (rangeA.start.letter !== rangeB.start.letter) {
+                  return rangeA.start.letter.localeCompare(rangeB.start.letter);
+              }
+              // Compare end numbers (if they exist)
+              if (rangeA.end && rangeB.end) {
+                  if (rangeA.end.number !== rangeB.end.number){
+                      return rangeA.end.number - rangeB.end.number;
+                  }
+                  return rangeA.end.letter.localeCompare(rangeB.end.letter);
+              }
+
+              return 0; // If everything is the same, no change
           });
-        })
-        .catch(error => console.error("Error loading file:", error));
-    }
+        }
 
-    loadAndDisplayBibleText('biblia.txt');
-</script>
-
+        loadAndDisplayBibleText('biblia.txt');
+    </script>
 </body>
 </html>

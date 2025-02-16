@@ -89,14 +89,15 @@
                                 const verseText = lines.slice(1).join('\n').trim();
 
                                 // Improved regex to handle various formats
-                              const match = verseNumber.match(/^(.*?)\s(\d+)(?:,?\s*(\d+[a-c]?)(?:-\d+[a-c]?)?)?$/);
+                              const match = verseNumber.match(/^(.*?)\s(\d+)(?:,?\s*(\d+[a-c]?)(?:-\s*(\d+[a-c]?))?)?$/);
 
                               if (match) {
                                   const book = match[1];
                                   const chapter = parseInt(match[2], 10);
-                                  const verseRange = match[3]; // Store the verse range string
+                                  const verseRange = match[3];
+                                  const verseRangeEnd = match[4];
 
-                                  verses.push({ book, chapter, verseRange, text: verseText });
+                                  verses.push({ book, chapter, verseRange, verseRangeEnd, text: verseText });
                               } else {
                                   console.warn("Invalid verse number format:", verseNumber);
                               }
@@ -145,6 +146,9 @@
                 if (verse.verseRange) {
                   number.textContent += `, ${verse.verseRange}`; // Add the verse range if it exists
                 }
+                if (verse.verseRangeEnd) {
+                  number.textContent += `-${verse.verseRangeEnd}`; // Add the verse range end if it exists
+                }
 
                 cardBody.appendChild(number);
 
@@ -159,7 +163,7 @@
         }
 
         function sortVerses(verses) {
-          const bookList = ['Rdz', 'Wj', 'Kpł', 'Lb', 'Pwt', 'Joz', 'Sdz', 'Rt', '1 Sm', '2 Sm', '1 Krl', '2 Krl', '1 Krn', '2 Krn', 'Ezd', 'Ne', 'Est', 'Hi', 'Ps', 'Prz', 'Koh', 'Pnp', 'Iz Izajasza', 'Jr', 'Lm', 'Ez', 'Dn', 'Oz', 'Jl', 'Am', 'Ab', 'Jon', 'Mi', 'Na', 'Ha', 'So', 'Ag', 'Za', 'Ml', 'Mt', 'Mk', 'Łk', 'J', 'Dz', 'Rz', '1 Kor', '2 Kor', 'Ga', 'Ef', 'Flp', 'Kol', '1 Tes', '2 Tes', '1 Tm', '2 Tm', 'Tt', 'Flm', 'Hbr', 'Jk', '1 P', '2 P', '1 J', '2 J', '3 J', 'Jud', 'Ap'];
+          const bookList = ['Rdz', 'Wj', 'Kpł', 'Lb', 'Pwt', 'Joz', 'Sdz', 'Rt', '1 Sm', '2 Sm', '1 Krl', '2 Krl', '1 Krn', '2 Krn', 'Ezd', 'Ne', 'Tb', 'Jdt', 'Est', '1 Mch', '2 Mch', 'Hi', 'Ps', 'Prz', 'Koh', 'Pnp', 'Mdr', 'Syr', 'Iz', 'Jr', 'Lm', 'Ba', 'Ez', 'Dn', 'Oz', 'Jl', 'Am', 'Ab', 'Jon', 'Mi', 'Na', 'Ha', 'So', 'Ag', 'Za', 'Ml', 'Mt', 'Mk', 'Łk', 'J', 'Dz', 'Rz', '1 Kor', '2 Kor', 'Ga', 'Ef', 'Flp', 'Kol', '1 Tes', '2 Tes', '1 Tm', '2 Tm', 'Tt', 'Flm', 'Hbr', 'Jk', '1 P', '2 P', '1 J', '2 J', '3 J', 'Jud', 'Ap'];
           return [...verses].sort((a, b) => {
               const aBookIndex = bookList.indexOf(a.book);
               const bBookIndex = bookList.indexOf(b.book);

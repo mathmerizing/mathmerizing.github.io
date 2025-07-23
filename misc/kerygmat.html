@@ -6,128 +6,344 @@
     <title>Kerygmat</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .card-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            margin-bottom: 20px;
+        }
         .card {
             border-radius: 1rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+            /* Removed min-height to allow card to adjust to content */
+            /* No padding here, as it's handled by .card-body children */
+        }
+        .card.active {
+            display: block;
         }
         .card-body {
+            padding: 0; /* Ensures no padding directly on the colored background */
+            display: flex; /* Use flexbox for inner content */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: space-between; /* Distribute space between title and quotes */
+            height: 100%; /* Ensure card-body takes full height of the card */
+            /* Default background color - overridden by palettes */
             background-color: #f8f9fa;
         }
+        /* Add padding to specific content elements to restore spacing for text */
+        .card-body .card-title {
+            padding: 20px 20px 0; /* Top and side padding, no bottom padding for title */
+        }
+        .card-body div[id^="quotes-"] {
+            padding: 0 20px 20px; /* Side and bottom padding, no top padding for quotes */
+        }
+
         .card-title {
+            /* Default text color - overridden by palettes */
             color: #343a40;
         }
 
+        /* Adjusted Navigation Arrows (unchanged) */
+        .navigation-arrows {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -50px;
+            right: -50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .navigation-arrows button {
+            pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .navigation-arrows button:hover {
+            opacity: 1;
+        }
+        .navigation-arrows button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .navigation-arrows #prevBtn {
+            margin-left: -20px;
+        }
+        .navigation-arrows #nextBtn {
+            margin-right: -20px;
+        }
+
+        /* Pagination Dots (unchanged) */
+        .pagination-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .dot-number {
+            font-weight: bold;
+            color: #555;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        .dot-number.active {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
         /* Color Palettes */
-        .palette-1 .card-body { background-color: #e9ecef; }
-        .palette-1 .card-title { color: #212529; }
-        .palette-2 .card-body { background-color: #d1ecf1; }
-        .palette-2 .card-title { color: #0b5ed7; }
-        .palette-3 .card-body { background-color: #ffeeba; }
-        .palette-3 .card-title { color: #856404; }
-        .palette-4 .card-body { background-color: #ced4da; }
-        .palette-4 .card-title { color: #495057; }
-        .palette-5 .card-body { background-color: #f0f0f5; }
-        .palette-5 .card-title { color: #333; }
-        .palette-6 .card-body { background-color: #e0f2f7; }
-        .palette-6 .card-title { color: #0d6efd; }
-        .palette-7 .card-body { background-color: #fff5cc; }
-        .palette-7 .card-title { color: #664d00; }
-        .palette-8 .card-body { background-color: #f5f0ff; }
-        .palette-8 .card-title { color: #512da8; }
-        .palette-9 .card-body { background-color: #d8f3dc; }
-        .palette-9 .card-title { color: #2e7d32; }
-        .palette-10 .card-body { background-color: #ffebee; }
-        .palette-10 .card-title { color: #b71c1c; }
+        .palette-1 .card-body { background-color: #FF0000; } /* Red */
+        .palette-1 .card-title { color: #FFFFFF; } /* White text for contrast */
+        .palette-1 div[id^="quotes-"] a { color: #ffe6e6; } /* Lighter red for links */
+
+        .palette-2 .card-body { background-color: #000000; } /* Black */
+        .palette-2 .card-title { color: #FFFFFF; } /* White text for contrast */
+        .palette-2 div[id^="quotes-"] a { color: #cccccc; } /* Lighter grey for links */
+
+        .palette-3 .card-body { background-color: #FFFFFF; } /* White */
+        .palette-3 .card-title { color: #000000; } /* Black text for contrast */
+        .palette-3 div[id^="quotes-"] a { color: #333333; } /* Darker grey for links */
+
+        .palette-4 .card-body { background-color: #6cbb3c; } /* Green */
+        .palette-4 .card-title { color: #ffffff; } /* White text for contrast */
+        .palette-4 div[id^="quotes-"] a { color: #f8f6f6; } /* Darker green for links */
+
+        .palette-5 .card-body { background-color: #0000FF; } /* Blue */
+        .palette-5 .card-title { color: #FFFFFF; } /* White text for contrast */
+        .palette-5 div[id^="quotes-"] a { color: #ccccff; } /* Lighter blue for links */
+
+        .palette-6 .card-body { background-color: #ffda03; } /* Yellow */
+        .palette-6 .card-title { color: #000000; } /* Black text for contrast */
+        .palette-6 div[id^="quotes-"] a { color: #000000; } /* Darker yellow/olive for links */
+
+        /* Removed original unused palettes */
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center mb-4">Kerygmat</h1>
-        <h2 class="text-left mb-4">1. Bóg Ciebie kocha</h2>
-        <div id="quotes-1">
-            <a href="https://biblia.deon.pl/rozdzial.php?id=515#W1">Iz 43, 1;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=672#W3">Jr 31, 3;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=936#W13">Ps 103, 13;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=246#W17">Mt 3, 17;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=521#W15">Iz 49, 15;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=526#W10">Iz 54, 10;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1030#W20">Ef 3, 20;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=354#W16">J 15, 16-17;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=991#W8">1 J 4, 8b</a>
+
+        <div class="card-container">
+            <div class="card mb-4 card-item palette-1">
+                <div class="card-body">
+                    <h2 class="card-title text-left">1. Bóg Ciebie kocha</h2>
+                    <div id="quotes-1">
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=515#W1">Iz 43, 1;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=672#W3">Jr 31, 3;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=936#W13">Ps 103, 13;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=246#W17">Mt 3, 17;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=521#W15">Iz 49, 15;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=526#W10">Iz 54, 10;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1030#W20">Ef 3, 20;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=354#W16">J 15, 16-17;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=991#W8">1 J 4, 8b</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 card-item palette-2">
+                <div class="card-body">
+                    <h2 class="card-title text-left">2. Jesteś grzesznikiem</h2>
+                    <div id="quotes-2">
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=272#W23">Rz 3, 23;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=275#W23">Rz 6, 23;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=884#W7">Ps 51, 7;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=2#W17">Rdz 2, 17;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=306#W21">Mk 7, 21-23;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=348#W41">J 9, 41;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=546#W36">Prz 8, 36;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=280#W32">Rz 11, 32</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 card-item palette-3">
+                <div class="card-body">
+                    <h2 class="card-title text-left">3. Jezus już Cię zbawił</h2>
+                    <div id="quotes-3">
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=342#W14">J 3, 14-16;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=342#W16">J 3, 16-17;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=349#W10">J 10, 10;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=273#W24">Rz 4, 24-25;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=274#W8">Rz 5, 8;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1393#W13">Kol 2, 13-14;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1029#W4">Ef 2, 4-5;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=988#W7">1 J 1, 7;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=805#W19">Mi 7, 19;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=355#W33">J 16, 33;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=381#W12">Dz 4, 12;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1014#W5">1 Tm 2, 5</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 card-item palette-4">
+                <div class="card-body">
+                    <h2 class="card-title text-left">4. Uwierz i nawróć się</h2>
+                    <div id="quotes-4">
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1029#W8">Ef 2, 8;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=380#W19">Dz 3, 19;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1091#W20">Ap 3, 20;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=672#W18">Jr 31, 18;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=279#W8">Rz 10, 8-10;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=274#W1">Rz 5, 1-2;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=393#W30">Dz 16, 30-31;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1030#W17">Ef 3, 17;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=988#W9">1 J 1, 9;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=379#W38">Dz 2, 38</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 card-item palette-5">
+                <div class="card-body">
+                    <h2 class="card-title text-left">5. Otrzymasz dar Ducha Świętego</h2>
+                    <div id="quotes-5">
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=740#W26">Ez 36, 26;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1026#W22">Ga 5, 22-23;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=378#W5">Dz 1, 5-8;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=379#W39">Dz 2, 39;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1110#W17">Ap 22, 17;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=346#W37">J 7, 37-39;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=326#W13">Łk 11, 13;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=741#W14">Ez 37, 14;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1016#W14">Ga 3, 14</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 card-item palette-6">
+                <div class="card-body">
+                    <h2 class="card-title text-left">6. Włącz się we wspólnotę</h2>
+                    <div id="quotes-6">
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=281#W5">Rz 12, 5;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1050#W9">1 P 2, 9-10;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=379#W42">Dz 2, 42;</a>
+                        <a href="https://biblia.deon.pl/rozdzial.php?id=1015#W14">1 Tm 3, 14</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-arrows">
+                <button id="prevBtn" class="arrow-btn">&larr;</button>
+                <button id="nextBtn" class="arrow-btn">&rarr;</button>
+            </div>
         </div>
-        <br>
-        <h2 class="text-left mb-4">2. Jesteś grzesznikiem</h2>
-        <div id="quotes-2">
-            <a href="https://biblia.deon.pl/rozdzial.php?id=272#W23">Rz 3, 23;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=275#W23">Rz 6, 23;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=884#W7">Ps 51, 7;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=2#W17">Rdz 2, 17;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=306#W21">Mk 7, 21-23;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=348#W41">J 9, 41;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=546#W36">Prz 8, 36;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=280#W32">Rz 11, 32</a>
+
+        <div class="pagination-dots" id="paginationDots">
+            </div>
+
+        <div class="d-flex justify-content-center">
+            <a href="https://julianroth.org/misc/biblia" class="btn btn-primary mb-3">Inne cytaty z Biblii</a>
         </div>
-        <br>
-        <h2 class="text-left mb-4">3. Jezus już Cię zbawił</h2>
-        <div id="quotes-3">
-            <a href="https://biblia.deon.pl/rozdzial.php?id=342#W14">J 3, 14-16;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=342#W16">J 3, 16-17;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=349#W10">J 10, 10;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=273#W24">Rz 4, 24-25;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=274#W8">Rz 5, 8;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1393#W13">Kol 2, 13-14;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1029#W4">Ef 2, 4-5;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=988#W7">1 J 1, 7;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=805#W19">Mi 7, 19;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=355#W33">J 16, 33;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=381#W12">Dz 4, 12;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1014#W5">1 Tm 2, 5</a>
-        </div>
-        <br>
-        <h2 class="text-left mb-4">4. Uwierz i nawróć się</h2>
-        <div id="quotes-4">
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1029#W8">Ef 2, 8;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=380#W19">Dz 3, 19;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1091#W20">Ap 3, 20;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=672#W18">Jr 31, 18;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=279#W8">Rz 10, 8-10;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=274#W1">Rz 5, 1-2;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=393#W30">Dz 16, 30-31;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1030#W17">Ef 3, 17;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=988#W9">1 J 1, 9;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=379#W38">Dz 2, 38</a>
-        </div>
-        <br>
-        <h2 class="text-left mb-4">5. Otrzymasz dar Ducha Świętego</h2>
-        <div id="quotes-5">
-            <a href="https://biblia.deon.pl/rozdzial.php?id=740#W26">Ez 36, 26;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1026#W22">Ga 5, 22-23;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=378#W5">Dz 1, 5-8;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=379#W39">Dz 2, 39;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1110#W17">Ap 22, 17;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=346#W37">J 7, 37-39;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=326#W13">Łk 11, 13;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=741#W14">Ez 37, 14;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1016#W14">Ga 3, 14</a>
-        </div>
-        <br>
-        <h2 class="text-left mb-4">6. Włącz się we wspólnotę</h2>
-        <div id="quotes-6">
-            <a href="https://biblia.deon.pl/rozdzial.php?id=281#W5">Rz 12, 5;</a> 
-            <!-- <a href="https://biblia.deon.pl/rozdzial.php?id=1393#W19">Kol 2, 19;</a>  -->
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1050#W9">1 P 2, 9-10;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=379#W42">Dz 2, 42;</a> 
-            <a href="https://biblia.deon.pl/rozdzial.php?id=1015#W14">1 Tm 3, 14</a>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center"><a href="https://julianroth.org/misc/biblia" class="btn btn-primary mb-3">Inne cytaty z Biblii</a></div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card-item');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const paginationDotsContainer = document.getElementById('paginationDots');
+            let currentCardIndex = 0;
 
-    
+            function createPaginationDots() {
+                paginationDotsContainer.innerHTML = '';
+                cards.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot-number');
+                    dot.textContent = (i + 1);
+                    dot.addEventListener('click', () => {
+                        currentCardIndex = i;
+                        showCard(currentCardIndex);
+                    });
+                    paginationDotsContainer.appendChild(dot);
+                });
+            }
+
+            function showCard(index) {
+                cards.forEach((card, i) => {
+                    if (i === index) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+                updateNavigationButtons();
+                updatePaginationDots();
+            }
+
+            function updateNavigationButtons() {
+                prevBtn.disabled = currentCardIndex === 0;
+                nextBtn.disabled = currentCardIndex === cards.length - 1;
+            }
+
+            function updatePaginationDots() {
+                const dots = paginationDotsContainer.querySelectorAll('.dot-number');
+                dots.forEach((dot, i) => {
+                    if (i === currentCardIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            prevBtn.addEventListener('click', function() {
+                if (currentCardIndex > 0) {
+                    currentCardIndex--;
+                    showCard(currentCardIndex);
+                }
+            });
+
+            nextBtn.addEventListener('click', function() {
+                if (currentCardIndex < cards.length - 1) {
+                    currentCardIndex++;
+                    showCard(currentCardIndex);
+                }
+            });
+
+            createPaginationDots();
+            showCard(currentCardIndex);
+        });
+    </script>
 </body>
 </html>

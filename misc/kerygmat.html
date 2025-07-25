@@ -31,35 +31,77 @@
             overflow: hidden;
             display: none;
             animation: fadeIn 0.5s ease-in-out;
-            /* Removed min-height to allow card to adjust to content */
-            /* No padding here, as it's handled by .card-body children */
         }
         .card.active {
             display: block;
         }
         .card-body {
-            padding: 0; /* Ensures no padding directly on the colored background */
-            display: flex; /* Use flexbox for inner content */
-            flex-direction: column; /* Stack content vertically */
-            justify-content: space-between; /* Distribute space between title and quotes */
-            height: 100%; /* Ensure card-body takes full height of the card */
-            /* Default background color - overridden by palettes */
-            background-color: #f8f9fa;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f8f9fa; /* Default, overridden by palettes */
         }
-        /* Add padding to specific content elements to restore spacing for text */
-        .card-body .card-title {
-            padding: 20px 20px 0; /* Top and side padding, no bottom padding for title */
-        }
-        .card-body div[id^="quotes-"] {
-            padding: 0 20px 20px; /* Side and bottom padding, no top padding for quotes */
+
+        .card-title-section {
+            padding: 20px; /* Padding around the title */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card-title {
-            /* Default text color - overridden by palettes */
-            color: #343a40;
+            margin-bottom: 0; /* Remove default margin */
+            color: #343a40; /* Default, overridden by palettes */
         }
 
-        /* Adjusted Navigation Arrows (unchanged) */
+        .quotes-container {
+            border-top: 1px solid rgba(255, 255, 255, 0.3); /* Separator line for references */
+            padding: 15px 20px;
+            display: none; /* Hidden by default, shown when card is active */
+        }
+        .quotes-container.show {
+            display: block;
+        }
+        .quotes-container a {
+            display: inline-block; /* Allows wrapping */
+            margin-right: 10px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            font-size: 0.95em;
+            padding: 3px 6px;
+            border-radius: 5px;
+            border: 1px solid transparent; /* Default transparent border */
+            transition: all 0.2s ease;
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        .quotes-container a.selected {
+            border: 1px solid #00FF00; /* Green border for selected link, as in drawing */
+        }
+        .quotes-container a:hover {
+            opacity: 0.8;
+        }
+
+        .bible-verse-display {
+            border-top: 1px solid rgba(255, 255, 255, 0.3); /* Separator line for verse text */
+            padding: 15px 20px;
+            font-style: italic;
+            text-align: center;
+            font-size: 1.1em;
+            margin-top: 10px;
+            background-color: rgba(0, 0, 0, 0.1); /* Slightly darker background for quotes */
+        }
+        .bible-verse-display .bible-link-text {
+             text-decoration: none; /* Remove underline from ">> Biblia" */
+             font-weight: bold;
+             margin-top: 10px;
+             display: block; /* New line for ">> Biblia" */
+             text-align: right;
+             font-size: 0.9em;
+        }
+
+
+        /* Navigation Arrows */
         .navigation-arrows {
             position: absolute;
             top: 0;
@@ -103,7 +145,7 @@
             margin-right: -20px;
         }
 
-        /* Pagination Dots (unchanged) */
+        /* Pagination Dots */
         .pagination-dots {
             display: flex;
             justify-content: center;
@@ -125,29 +167,48 @@
         /* Color Palettes */
         .palette-1 .card-body { background-color: #FF0000; } /* Red */
         .palette-1 .card-title { color: #FFFFFF; } /* White text for contrast */
-        .palette-1 div[id^="quotes-"] a { color: #ffe6e6; } /* Lighter red for links */
+        .palette-1 .quotes-container a { color: #ffe6e6; } /* Lighter red for links */
+        .palette-1 .quotes-container a.selected { border-color: #00FF00; } /* Green border */
+        .palette-1 .bible-verse-display { color: #FFFFFF; } /* White text for verse */
+        .palette-1 .bible-verse-display .bible-link-text { color: #ffe6e6; } /* Lighter red for ">> Biblia" */
+
 
         .palette-2 .card-body { background-color: #000000; } /* Black */
         .palette-2 .card-title { color: #FFFFFF; } /* White text for contrast */
-        .palette-2 div[id^="quotes-"] a { color: #cccccc; } /* Lighter grey for links */
+        .palette-2 .quotes-container a { color: #cccccc; } /* Lighter grey for links */
+        .palette-2 .quotes-container a.selected { border-color: #00FF00; } /* Green border */
+        .palette-2 .bible-verse-display { color: #FFFFFF; } /* White text for verse */
+        .palette-2 .bible-verse-display .bible-link-text { color: #cccccc; } /* Lighter grey for ">> Biblia" */
+
 
         .palette-3 .card-body { background-color: #FFFFFF; } /* White */
         .palette-3 .card-title { color: #000000; } /* Black text for contrast */
-        .palette-3 div[id^="quotes-"] a { color: #333333; } /* Darker grey for links */
+        .palette-3 .quotes-container a { color: #333333; } /* Darker grey for links */
+        .palette-3 .quotes-container a.selected { border-color: #00FF00; } /* Green border */
+        .palette-3 .bible-verse-display { color: #000000; } /* Black text for verse */
+        .palette-3 .bible-verse-display .bible-link-text { color: #333333; } /* Darker grey for ">> Biblia" */
 
         .palette-4 .card-body { background-color: #6cbb3c; } /* Green */
         .palette-4 .card-title { color: #ffffff; } /* White text for contrast */
-        .palette-4 div[id^="quotes-"] a { color: #f8f6f6; } /* Darker green for links */
+        .palette-4 .quotes-container a { color: #f8f6f6; } /* Lighter green for links */
+        .palette-4 .quotes-container a.selected { border-color: #00FF00; } /* Green border */
+        .palette-4 .bible-verse-display { color: #FFFFFF; } /* White text for verse */
+        .palette-4 .bible-verse-display .bible-link-text { color: #f8f6f6; } /* Lighter green for ">> Biblia" */
+
 
         .palette-5 .card-body { background-color: #0000FF; } /* Blue */
         .palette-5 .card-title { color: #FFFFFF; } /* White text for contrast */
-        .palette-5 div[id^="quotes-"] a { color: #ccccff; } /* Lighter blue for links */
+        .palette-5 .quotes-container a { color: #ccccff; } /* Lighter blue for links */
+        .palette-5 .quotes-container a.selected { border-color: #00FF00; } /* Green border */
+        .palette-5 .bible-verse-display { color: #FFFFFF; } /* White text for verse */
+        .palette-5 .bible-verse-display .bible-link-text { color: #ccccff; } /* Lighter blue for ">> Biblia" */
 
         .palette-6 .card-body { background-color: #ffda03; } /* Yellow */
         .palette-6 .card-title { color: #000000; } /* Black text for contrast */
-        .palette-6 div[id^="quotes-"] a { color: #000000; } /* Darker yellow/olive for links */
-
-        /* Removed original unused palettes */
+        .palette-6 .quotes-container a { color: #000000; } /* Black for links */
+        .palette-6 .quotes-container a.selected { border-color: #00FF00; } /* Green border */
+        .palette-6 .bible-verse-display { color: #000000; } /* Black text for verse */
+        .palette-6 .bible-verse-display .bible-link-text { color: #000000; } /* Black for ">> Biblia" */
 
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
@@ -162,100 +223,124 @@
         <div class="card-container">
             <div class="card mb-4 card-item palette-1">
                 <div class="card-body">
-                    <h2 class="card-title text-left">1. Bóg Ciebie kocha</h2>
-                    <div id="quotes-1">
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=515#W1">Iz 43, 1;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=672#W3">Jr 31, 3;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=936#W13">Ps 103, 13;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=246#W17">Mt 3, 17;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=521#W15">Iz 49, 15;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=526#W10">Iz 54, 10;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1030#W20">Ef 3, 20;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=354#W16">J 15, 16-17;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=991#W8">1 J 4, 8b</a>
+                    <div class="card-title-section">
+                        <h2 class="card-title text-left">1. Bóg Ciebie kocha</h2>
+                    </div>
+                    <div id="quotes-1" class="quotes-container">
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=515#W1" data-verse="Ale teraz tak mówi Pan, Stworzyciel twój, Jakubie, i Twórca twój o Izraelu: 'Nie lękaj się, bo cię wykupiłem, wezwałem cię po imieniu; tyś mój!' ">Iz 43, 1</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=672#W3" data-verse="Ukochałem cię odwieczną miłością, dlatego też podtrzymywałem dla ciebie łaskawość.">Jr 31, 3b</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=936#W13" data-verse="Jak się lituje ojciec nad synami, tak Pan się lituje nad tymi, co się Go boją.">Ps 103, 13</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=246#W17" data-verse="A oto głos z niebia mówił: 'Ten jest mój Syn umiłowany, w którym mam upodobanie.' ">Mt 3, 17</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=521#W15" data-verse="Czyż może niewiasta zapomnieć o swym niemowlęciu, ta, która kocha syna swego łona? A nawet gdyby ona zapomniała, Ja nie zapomnę o tobie.">Iz 49, 15</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=526#W10" data-verse="Bo góry mogą się poruszyć i pagórki się zachwiać, ale miłość moja nie odstąpi od ciebie i nie zachwieje się moje przymierze pokoju, mówi Pan, który ma litość nad tobą.">Iz 54, 10</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1030#W20" data-verse="Temu zaś, który mocą działającą w nas może uczynić nieskończenie więcej niż to, o co my prosimy czy rozumiemy.">Ef 3, 20</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=354#W16" data-verse="Nie wyście Mnie wybrali, ale Ja was wybrałem i przeznaczyłem was na to, abyście szli i owoc przynosili, i by owoc wasz trwał - aby Ojciec dał wam [wszystko], o cokolwiek Go poprosicie w imię moje. To wam przykazuję, abyście się wzajemnie miłowali.">J 15, 16-17</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=991#W8" data-verse="Bo Bóg jest miłością.">1 J 4, 8b</a>
+                        <div class="bible-verse-display" id="bible-verse-display-1">
+                            </div>
                     </div>
                 </div>
             </div>
 
             <div class="card mb-4 card-item palette-2">
                 <div class="card-body">
-                    <h2 class="card-title text-left">2. Jesteś grzesznikiem</h2>
-                    <div id="quotes-2">
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=272#W23">Rz 3, 23;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=275#W23">Rz 6, 23;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=884#W7">Ps 51, 7;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=2#W17">Rdz 2, 17;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=306#W21">Mk 7, 21-23;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=348#W41">J 9, 41;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=546#W36">Prz 8, 36;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=280#W32">Rz 11, 32</a>
+                    <div class="card-title-section">
+                        <h2 class="card-title text-left">2. Jesteś grzesznikiem</h2>
+                    </div>
+                    <div id="quotes-2" class="quotes-container">
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=272#W23" data-verse="Wszyscy bowiem zgrzeszyli i pozbawieni są chwały Bożej.">Rz 3, 23</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=275#W23" data-verse="Albowiem zapłatą za grzech jest śmierć, a łaska przez Boga dana - to życie wieczne w Chrystusie Jezusie, Panu naszym.">Rz 6, 23</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=884#W7" data-verse="Oto zrdodzony jestem w przewinieniu i w grzechu poczęła mnie matka.">Ps 51, 7</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=2#W17" data-verse="Ale z drzewa poznania dobra i zła nie wolno ci jeść, bo gdy z niego spożyjesz, niechybnie umrzesz.">Rdz 2, 17</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=306#W21" data-verse="Z wnętrza bowiem, z serca ludzkiego pochodzą złe myśli, nierząd, kradzieże, zabójstwa, cudzołóstwa, chciwość, przewrotność, podstęp, wyuzdanie, zazdrość, obelgi, pycha, głupota. Całe to zło z wnętrza pochodzi i czyni człowieka nieczystym.">Mk 7, 21-23</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=348#W41" data-verse="Jezus powiedział do nich: 'Gdybyście byli niewidomi, nie mielibyście grzechu, ale ponieważ mówicie: 'Widzimy', grzech wasz trwa nadal.' ">J 9, 41</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=546#W36" data-verse="Kto przeciw mnie grzeszy, duszę swą rani, wszyscy, co mnie nienawidzą, śmierć kochają.">Prz 8, 36</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=280#W32" data-verse="Albowiem Bóg poddał wszystkich nieposłuszeństwu, aby wszystkim okazać swe miłosierdzie.">Rz 11, 32</a>
+                        <div class="bible-verse-display" id="bible-verse-display-2">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card mb-4 card-item palette-3">
                 <div class="card-body">
-                    <h2 class="card-title text-left">3. Jezus już Cię zbawił</h2>
-                    <div id="quotes-3">
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=342#W14">J 3, 14-16;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=342#W16">J 3, 16-17;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=349#W10">J 10, 10;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=273#W24">Rz 4, 24-25;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=274#W8">Rz 5, 8;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1393#W13">Kol 2, 13-14;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1029#W4">Ef 2, 4-5;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=988#W7">1 J 1, 7;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=805#W19">Mi 7, 19;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=355#W33">J 16, 33;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=381#W12">Dz 4, 12;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1014#W5">1 Tm 2, 5</a>
+                    <div class="card-title-section">
+                        <h2 class="card-title text-left">3. Jezus już Cię zbawił</h2>
+                    </div>
+                    <div id="quotes-3" class="quotes-container">
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=342#W14" data-verse="A jak Mojżesz wywyższył węża na pustyni, tak potrzeba, by wywyższono Syna Człowieczego, aby każdy, kto w Niego wierzy, miał życie wieczne.">J 3, 14-16</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=342#W16" data-verse="Tak bowiem Bóg umiłował świat, że Syna swego Jednorodzonego dał, aby każdy, kto w Niego wierzy, nie zginął, ale miał życie wieczne. Albowiem Bóg nie posłał swego Syna na świat po to, aby świat potępił, ale po to, by świat został przez Niego zbawiony.">J 3, 16-17</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=349#W10" data-verse="Ja przyszedłem po to, aby owce miały życie i miały je w obfitości.">J 10, 10</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=273#W24" data-verse="przez usprawiedliwienie z daru, z łaski, przez odkupienie, które jest w Chrystusie Jezusie. Jego to ustanowił Bóg narzędziem przebłagania przez wiarę mocą Jego krwi.">Rz 4, 24-25</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=274#W8" data-verse="Bóg zaś okazuje nam swoją miłość właśnie przez to, że Chrystus umarł za nas, gdyśmy byli jeszcze grzesznikami.">Rz 5, 8</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1393#W13" data-verse="I was, umarłych na skutek występków i nieobrzezania waszego ciała, razem z Nim ożywił. Darował nam wszystkie występki, skreślił zapis dłużny, wiążący nas swymi przepisami.">Kol 2, 13-14</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1029#W4" data-verse="Lecz Bóg, będąc bogaty w miłosierdzie, przez wielką swą miłość, jaką nas umiłował, i nas, umarłych na skutek występków, razem z Chrystusem przywrócił do życia.">Ef 2, 4-5</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=988#W7" data-verse="Jeżeli chodzimy w światłości, tak jak On sam jest w światłości, to mamy łączność jedni z drugimi, a krew Jezusa, Syna Jego, oczyszcza nas z wszelkiego grzechu.">1 J 1, 7</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=805#W19" data-verse="Zrzuci nieprawości nasze, wrzuci w głębokości morskie wszystkie grzechy nasze.">Mi 7, 19</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=355#W33" data-verse="To wam powiedziałem, abyście pokój we Mnie mieli. Na świecie doznacie ucisku, ale miejcie odwagę: Jam zwyciężył świat.">J 16, 33</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=381#W12" data-verse="I nie ma w żadnym innym zbawienia, gdyż nie dano ludziom pod niebem żadnego innego imienia, w którym moglibyśmy być zbawieni.">Dz 4, 12</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1014#W5" data-verse="Albowiem jeden jest Bóg, jeden też pośrednik między Bogiem a ludźmi, człowiek, Chrystus Jezus.">1 Tm 2, 5</a>
+                        <div class="bible-verse-display" id="bible-verse-display-3">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card mb-4 card-item palette-4">
                 <div class="card-body">
-                    <h2 class="card-title text-left">4. Uwierz i nawróć się</h2>
-                    <div id="quotes-4">
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1029#W8">Ef 2, 8;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=380#W19">Dz 3, 19;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1091#W20">Ap 3, 20;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=672#W18">Jr 31, 18;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=279#W8">Rz 10, 8-10;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=274#W1">Rz 5, 1-2;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=393#W30">Dz 16, 30-31;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1030#W17">Ef 3, 17;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=988#W9">1 J 1, 9;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=379#W38">Dz 2, 38</a>
+                    <div class="card-title-section">
+                        <h2 class="card-title text-left">4. Uwierz i nawróć się</h2>
+                    </div>
+                    <div id="quotes-4" class="quotes-container">
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1029#W8" data-verse="Łaską bowiem jesteście zbawieni przez wiarę. A to pochodzi nie od was, lecz jest darem Boga.">Ef 2, 8</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=380#W19" data-verse="Pokutujcie więc i nawróćcie się, aby grzechy wasze zostały zgładzone.">Dz 3, 19</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1091#W20" data-verse="Oto stoję u drzwi i kołaczę: jeśli kto posłyszy mój głos i drzwi otworzy, wejdę do niego i będę z nim wieczerzał, a on ze Mną.">Ap 3, 20</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=672#W18" data-verse="Usłyszałem, jak Efraim narzeka: Skarciłeś mnie i zostałem skarcony jak źrebię nieposkromione. Nawróć mnie, a nawrócę się, bo Ty, Panie, jesteś Bogiem moim.">Jr 31, 18</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=279#W8" data-verse="Słowo to jest blisko ciebie, na twoich ustach i w sercu twoim. I wzywaj Pana, bo On blisko jest.">Rz 10, 8-10</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=274#W1" data-verse="Usprawiedliwieni więc z wiary, osiągnęliśmy pokój z Bogiem przez Pana naszego Jezusa Chrystusa, dzięki któremu uzyskaliśmy dostęp przez wiarę do tej łaski, w której trwamy. I chlubimy się nadzieją chwały Bożej.">Rz 5, 1-2</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=393#W30" data-verse="Co mam czynić, aby być zbawionym? Na to mu odpowiedzieli: Uwierz w Pana Jezusa, a zbawisz siebie i swój dom.">Dz 16, 30-31</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1030#W17" data-verse="By Chrystus przez wiarę zamieszkał w sercach waszych.">Ef 3, 17</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=988#W9" data-verse="Jeśli wyznajemy nasze grzechy, [Bóg] jest wierny i sprawiedliwy i odpuści nam grzechy, i oczyści nas z wszelkiej nieprawości.">1 J 1, 9</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=379#W38" data-verse="Nawróćcie się – powiedział do nich Piotr – i niech każdy z was ochrzci się w imię Jezusa Chrystusa na odpuszczenie grzechów waszych, a weźmiecie w darze Ducha Świętego.">Dz 2, 38</a>
+                        <div class="bible-verse-display" id="bible-verse-display-4">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card mb-4 card-item palette-5">
                 <div class="card-body">
-                    <h2 class="card-title text-left">5. Otrzymasz dar Ducha Świętego</h2>
-                    <div id="quotes-5">
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=740#W26">Ez 36, 26;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1026#W22">Ga 5, 22-23;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=378#W5">Dz 1, 5-8;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=379#W39">Dz 2, 39;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1110#W17">Ap 22, 17;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=346#W37">J 7, 37-39;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=326#W13">Łk 11, 13;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=741#W14">Ez 37, 14;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1016#W14">Ga 3, 14</a>
+                    <div class="card-title-section">
+                        <h2 class="card-title text-left">5. Otrzymasz dar Ducha Świętego</h2>
+                    </div>
+                    <div id="quotes-5" class="quotes-container">
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=740#W26" data-verse="I dam wam serce nowe i ducha nowego tchnę do waszego wnętrza, odbiorę wam serce kamienne, a dam wam serce z ciała.">Ez 36, 26</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1026#W22" data-verse="Owocem zaś Ducha jest: miłość, radość, pokój, cierpliwość, uprzejmość, dobroć, wierność, łagodność, opanowanie.">Ga 5, 22-23</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=378#W5" data-verse="Jana chrzcił wodą, wy zaś wkrótce zostaniecie ochrzczeni Duchem Świętym.">Dz 1, 5-8</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=379#W39" data-verse="Bo dla was jest obietnica i dla dzieci waszych, i dla wszystkich, którzy są daleko, ilu ich Pan, Bóg nasz, powoła.">Dz 2, 39</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1110#W17" data-verse="A Duch i Oblubienica mówią: Przyjdź! A ten, kto słyszy, niech powie: Przyjdź! I kto pragnie, niech przyjdzie, a kto chce, niech wody życia darmo zaczerpnie.">Ap 22, 17</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=346#W37" data-verse="W ostatnim, najbardziej uroczystym dniu święta, Jezus stojąc zawołał donośnym głosem: Jeśli ktoś jest spragniony, a wierzy we Mnie – niech przyjdzie do Mnie i pije! Jak rzekło Pismo: Strumienie wody żywej popłyną z jego wnętrza. A powiedział to o Duchu, którego mieli otrzymać wierzący w Liego.">J 7, 37-39</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=326#W13" data-verse="Jeśli więc wy, choć źli jesteście, umiecie dawać dobre dary swoim dzieciom, o ileż bardziej Ojciec z Nieba da Ducha Świętego tym, którzy Go proszą.">Łk 11, 13</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=741#W14" data-verse="I dam wam Mój powiew, i będziecie żyli, i złożę was w waszej ziemi, i poznacie, że Ja, Pan, to powiedziałem i uczyniłem – wyrocznia Pana Boga.">Ez 37, 14</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1016#W14" data-verse="Aby błogosławieństwo Abrahama stało się w Chrystusie Jezusie udziałem pogan i abyśmy otrzymali obiecanego Ducha przez wiarę.">Ga 3, 14</a>
+                        <div class="bible-verse-display" id="bible-verse-display-5">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card mb-4 card-item palette-6">
                 <div class="card-body">
-                    <h2 class="card-title text-left">6. Włącz się we wspólnotę</h2>
-                    <div id="quotes-6">
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=281#W5">Rz 12, 5;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1050#W9">1 P 2, 9-10;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=379#W42">Dz 2, 42;</a>
-                        <a href="https://biblia.deon.pl/rozdzial.php?id=1015#W14">1 Tm 3, 14</a>
+                    <div class="card-title-section">
+                        <h2 class="card-title text-left">6. Włącz się we wspólnotę</h2>
+                    </div>
+                    <div id="quotes-6" class="quotes-container">
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=281#W5" data-verse="Albowiem jak w jednym ciele mamy wiele członków, a nie wszystkie członki spełniają tę samą czynność – podobnie wszyscy razem tworzymy jedno ciało w Chrystusie, a każdy z osobna jesteśmy nawzajem dla siebie członkami.">Rz 12, 5</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1050#W9" data-verse="Wy zaś jesteście wybranym plemieniem, królewskim kapłaństwem, narodem świętym, ludem Bogu na własność przeznaczonym, abyście ogłaszali dzieła potęgi Tego, który was wezwał z ciemności do przedziwnego swego światła.">1 P 2, 9-10</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=379#W42" data-verse="Trwali oni w nauce Apostołów i we wspólnocie, w łamaniu chleba i w modlitwach.">Dz 2, 42</a>
+                        <a data-url="https://biblia.deon.pl/rozdzial.php?id=1015#W14" data-verse="Piszę to do ciebie z nadzieją, że wkrótce do ciebie przyjdę; gdyby jednak przyszło mi zwlekać, wiesz, jak należy postępować w domu Bożym, który jest Kościołem Boga żywego, filarem i podporą prawdy.">1 Tm 3, 14</a>
+                        <div class="bible-verse-display" id="bible-verse-display-6">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -267,7 +352,7 @@
         </div>
 
         <div class="pagination-dots" id="paginationDots">
-            </div>
+        </div>
 
         <div class="d-flex justify-content-center">
             <a href="https://julianroth.org/misc/biblia" class="btn btn-primary mb-3">Inne cytaty z Biblii</a>
@@ -299,12 +384,46 @@
                 });
             }
 
+            function updateVerseDisplay(verseLink) {
+                const parentQuotesContainer = verseLink.closest('.quotes-container');
+                if (parentQuotesContainer) {
+                    const bibleVerseDisplay = parentQuotesContainer.querySelector('.bible-verse-display');
+                    if (bibleVerseDisplay) {
+                        const verseText = verseLink.getAttribute('data-verse');
+                        const verseUrl = verseLink.getAttribute('data-url'); // Get the specific URL
+
+                        bibleVerseDisplay.innerHTML = `
+                            "${verseText}"
+                            <a href="${verseUrl}" target="_blank" rel="noopener noreferrer" class="bible-link-text">>> Znajdź w Biblii</a>
+                        `;
+                    }
+                }
+            }
+
             function showCard(index) {
                 cards.forEach((card, i) => {
                     if (i === index) {
                         card.classList.add('active');
+                        const quotesContainer = card.querySelector('.quotes-container');
+                        if (quotesContainer) {
+                            quotesContainer.classList.add('show'); // Ensure quotes list is visible
+
+                            const firstVerseLink = quotesContainer.querySelector('a[data-verse]');
+
+                            // Display first verse and highlight it
+                            if (firstVerseLink) {
+                                // Clear any existing selected from all links in this container
+                                quotesContainer.querySelectorAll('a.selected').forEach(link => link.classList.remove('selected'));
+                                firstVerseLink.classList.add('selected');
+                                updateVerseDisplay(firstVerseLink); // Call the new function
+                            }
+                        }
                     } else {
                         card.classList.remove('active');
+                        const quotesContainer = card.querySelector('.quotes-container');
+                        if (quotesContainer) {
+                            quotesContainer.classList.remove('show'); // Hide quotes list for inactive cards
+                        }
                     }
                 });
                 updateNavigationButtons();
@@ -327,6 +446,24 @@
                 });
             }
 
+            // Add event listeners for verse links
+            document.querySelectorAll('.quotes-container a[data-verse]').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+
+                    const parentQuotesContainer = this.closest('.quotes-container');
+                    if (parentQuotesContainer) {
+                        // Remove 'selected' from all links in this container
+                        parentQuotesContainer.querySelectorAll('a.selected').forEach(a => a.classList.remove('selected'));
+                        // Add 'selected' to the clicked link
+                        this.classList.add('selected');
+
+                        updateVerseDisplay(this); // Call the new function
+                    }
+                });
+            });
+
+
             prevBtn.addEventListener('click', function() {
                 if (currentCardIndex > 0) {
                     currentCardIndex--;
@@ -342,7 +479,7 @@
             });
 
             createPaginationDots();
-            showCard(currentCardIndex);
+            showCard(currentCardIndex); // Initialize by showing the first card
         });
     </script>
 </body>

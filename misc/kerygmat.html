@@ -214,6 +214,49 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        /* Overlay styles */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease;
+        }
+        .overlay.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .overlay-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-width: 500px;
+            text-align: center;
+            color: #333;
+            max-height: 80vh; /* Adjust as needed, e.g., 80% of viewport height */
+            overflow-y: auto; /* Adds scrollbar when content overflows vertically */
+        }
+        .overlay-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -355,7 +398,27 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <a href="https://julianroth.org/misc/biblia" class="btn btn-primary mb-3">Inne cytaty z Biblii</a>
+            <a href="https://julianroth.org/misc/biblia" class="btn btn-primary mb-3 mr-2">Inne cytaty z Biblii</a>
+            <button id="confessionBtn" class="btn btn-success mb-3">Wyznanie wiary</button>
+        </div>
+    </div>
+
+    <div id="confessionOverlay" class="overlay">
+        <div class="overlay-content" style="text-align:left">
+            <button class="overlay-close-btn" id="closeOverlayBtn">&times;</button>
+            <h3>Wyznanie, żę Jezus jest Panem</h3>
+            <p>
+                <b>JEZU</b>, wierzę w Twoje zmartwychwstanie. Bóg Cię uwielbił, napełnił Cię <b>DUCHEM ŚWIĘTYM</b> i dał Ci Imię, które jest ponad wszelkim imieniem. Klękam przed Tobą na znak, że uznaję Cie <b>PANEM, MOIM PANEM, PANEM</b> całego mojego życia i poddaję się całkowicie Tobie i Twojej świętej woli, abyś uczynił ze mną to, co Ty chcesz.
+            </p><br>
+            <p>
+                Nie chcę już być więcej centrum swojego życia. Panie, Ty przejmij kierowanie. Uczyń abym pragnął i robił to, co Ty chcesz. Powierzam Ci całego siebie. Chcę być Twój, tylko Twój i niczyj więcej. Ogłaszam Cię Panem mojego życia, moim jedynym Panem. Nie chcę być niewolnikiem ani pieniędzy, ani przyjemności, ani żadnej wady lub żądzy, która mnie oddala od Ciebie. Daję Ci całe moje życie na zawsze.
+            </p><br>
+            <p>
+                Podejmuj wszystkie moje decyzje weług Twojej woli i spraw, abym był jak Maryja, sługa Twojego Słowa, ponieważ jest to jedyny sposób na to, by być naprawdę wolnym. Ja nie chcę już więcej żyć dla siebie, żyj Ty we mnie. Daj mi Swoje życie w zamian za moje, które Ci dzisiaj powierzam na zawsze. Wiem, że potraktowałeś poważnie moje słowa, tak jak ja potraktowałem poważnie Twoje wezwanie.
+            </p><br>
+            <p>
+                Otwieram Ci całkowicie bramę mojego serca. Wejdź we mnie i zostań ze mną na zawsze.
+            </p>
         </div>
     </div>
 
@@ -368,6 +431,9 @@
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const paginationDotsContainer = document.getElementById('paginationDots');
+            const confessionBtn = document.getElementById('confessionBtn');
+            const confessionOverlay = document.getElementById('confessionOverlay');
+            const closeOverlayBtn = document.getElementById('closeOverlayBtn');
             let currentCardIndex = 0;
 
             function createPaginationDots() {
@@ -475,6 +541,22 @@
                 if (currentCardIndex < cards.length - 1) {
                     currentCardIndex++;
                     showCard(currentCardIndex);
+                }
+            });
+
+            // Event listeners for the new "Wyznanie wiary" button and overlay
+            confessionBtn.addEventListener('click', function() {
+                confessionOverlay.classList.add('show');
+            });
+
+            closeOverlayBtn.addEventListener('click', function() {
+                confessionOverlay.classList.remove('show');
+            });
+
+            // Close overlay if clicked outside the content
+            confessionOverlay.addEventListener('click', function(event) {
+                if (event.target === confessionOverlay) {
+                    confessionOverlay.classList.remove('show');
                 }
             });
 

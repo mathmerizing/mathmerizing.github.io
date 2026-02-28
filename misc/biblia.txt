@@ -313,7 +313,7 @@ Dz 14, 22b
 Ps 105, 4
 "Rozmyślajcie o Panu i Jego potędze, szukajcie zawsze Jego oblicza!"
 
-Dz 20, 35d
+Dz 20, 35
 "Więcej szczęścia jest w dawaniu aniżeli w braniu."
 
 Ps 116, 6
